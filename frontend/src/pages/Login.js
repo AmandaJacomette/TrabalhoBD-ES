@@ -1,22 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import $ from 'jquery';
 import '../App.css';
 import logo from "../img/logo.png"
 import { Link, useNavigate } from 'react-router-dom';
 import {withRouter} from 'react-router-dom';
 import Popup from '../components/popuplogin';
+import StoreContext from '../components/Store/Context';
 import axios from 'axios';
-
-
-
 
 function Formulario({navigation}){
     //const history = useNavigate();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { setToken, token } = useContext(StoreContext);
+
     
     const [formData, setFormData] = useState({
         login: '2001', 
         senha: '123', 
     });
+
+    const[userData, setUser] = useState('');
+
+    const sendUserData = (userData) => {
+      setUser(userData);
+    }
     
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -26,14 +33,48 @@ function Formulario({navigation}){
         }));
     };
 
+    function runPyScript(input){
+      var jqXHR = $.ajax({
+          type: "POST",
+          url: "/api/searchFuncionario",
+          async: false,
+          data: { cpf: input}
+      });
+    
+      var data = $.ajax({
+        type: "POST",
+        url: "/api/returnFuncionario",
+        async: false,
+        data: { cpf: input}
+    });
+    sendUserData(data);
+      
+    return jqXHR.responseText;
+    // return jqXHR;
+    }
+
     const handleSubmit = (event) => {
 
       axios.post('http://127.0.0.1:5000/api/sendDados', formData)
       .then(response => {
         
         console.log('Resposta do servidor:', response.data);
+        var result = runPyScript(formData);
+
         if(response.data.error != true){
-          navigate("EntrarCaixa",  { replace: false });
+
+          if (result['response'] == 3){
+            setToken({token: 3});
+            navigate("/EntrarCaixa",  { replace: false }, {state: {userData: userData}});
+
+          } else if (result['response'] == 2) {
+            setToken({token: 2});
+
+          } else if (result['response'] == 1) {
+            setToken({token: 1});
+
+          }
+        
         } else {
           window.alert("Erro ao fazer login! verifique seu usuario e senha e tente novamente.");
         }
@@ -42,8 +83,12 @@ function Formulario({navigation}){
       .catch(error => {
         console.error('Erro ao enviar dados:', error);
       });
-        
-        
+        /* TEMPORARIO */
+        if (formData.login == '2001' && formData.senha == '123'){
+          setToken({token: 1});
+          console.log(token);
+          navigate("/EntrarCaixa",  { replace: false }, {state: {userData: userData}});
+        }
 
         event.preventDefault();
         
