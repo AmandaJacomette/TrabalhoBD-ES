@@ -10,8 +10,8 @@ function EntrarCaixa({userData}){
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        id: userData.id,
-        cpf: userData.cpf,
+        id: ' ',
+        cpf: ' ',
         caixa: '20', 
         hora: '09:00', 
     });
