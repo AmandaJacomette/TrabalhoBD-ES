@@ -123,6 +123,7 @@ function Encomendas({userData}){
   
 
     return (
+      <div className="containerEnc">
         <div className="mform">
         <div class = "text">Encomendas</div>
         <form onSubmit={handleSubmit}>
@@ -298,7 +299,7 @@ function Encomendas({userData}){
         </div>
       </div>
         
-        
+      </div>
   );
 }
 

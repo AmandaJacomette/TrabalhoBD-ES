@@ -37,30 +37,30 @@ const Home = ({userData}) => {
         <div>
         <Sidebar userData={userData} newMessage={ handleClick }></Sidebar>
         <Usuario userData={userData}></Usuario>
-        {state.message == 0 ?
+        {state.message === 0 ?
           <h2>Pagina Inicial</h2>
         : ''}
-        {state.message == 1 ?
+        {state.message === 1 ?
           <JornadadeTrabalho userData={userData}></JornadadeTrabalho>
           
         : ''}
-        {state.message == 2 ?
+        {state.message === 2 ?
           <RecursosHumanos userData={userData}></RecursosHumanos>
           
         : ''}
-         {state.message == 3 ?
+         {state.message === 3 ?
           <VendasRealizadas userData={userData}></VendasRealizadas>
           
         : ''}
-         {state.message == 4 ?
+         {state.message === 4 ?
           <Encomendas userData={userData}></Encomendas>
           
         : ''}
-         {state.message == 5 ?
+         {state.message === 5 ?
           <Relatorios userData={userData}></Relatorios>
           
         : ''}
-         {state.message == 6 ?
+         {state.message === 6 ?
           <Departamento userData={userData}></Departamento>
           
         : ''}

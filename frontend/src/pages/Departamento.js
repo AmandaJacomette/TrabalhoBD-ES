@@ -26,6 +26,7 @@ function createRandomUsers(count = 5) {
 
 function Departamento({userData}){
   const [tableData, setTableData] = useState([]);
+
   const { setToken, token } = useContext(StoreContext);
 
   useEffect(() => {
@@ -55,11 +56,13 @@ function Departamento({userData}){
     setTableData([]);
   }
 
+
     return (
         <div className="mform">
         <div className = "text">Funcionários</div>
       <button className= "update-btn" onClick={handleCreateUsers}>Create Users</button>
       <button className= "delete-btn" onClick={handleClearUsers}>Delete Users</button>
+
       <div class="table">
       <div class="table-header">
           
@@ -112,6 +115,8 @@ function Departamento({userData}){
           }
         </div>
       </div>
+
+      
         </div>
   );
 }
