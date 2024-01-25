@@ -8,7 +8,10 @@ import StoreContext from '../components/Store/Context';
 function EntrarCaixa({userData}){
   const { setToken, token } = useContext(StoreContext);
     const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
+        id: userData.id,
+        cpf: userData.cpf,
         caixa: '20', 
         hora: '09:00', 
     });

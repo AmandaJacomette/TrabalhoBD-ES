@@ -19,7 +19,15 @@ function Formulario({navigation}){
         senha: '123', 
     });
 
-    const[userData, setUser] = useState('');
+    const[user, setUser] = useState({
+      id: 2001,
+      cpf: "123456789-01",
+      name: "Funcionario 10",
+      funcao : "Gerente",
+      salario: 4500.55,
+      dataInicio: '01-01-2024',
+      horaIntervalo: '16:00'
+    });
 
     const sendUserData = (userData) => {
       setUser(userData);
@@ -65,7 +73,7 @@ function Formulario({navigation}){
 
           if (result['response'] == 3){
             setToken({token: 3});
-            navigate("/EntrarCaixa",  { replace: false }, {state: {userData: userData}});
+            navigate("/EntrarCaixa",  { replace: false }, {state: { userData: user }});
 
           } else if (result['response'] == 2) {
             setToken({token: 2});
@@ -87,7 +95,7 @@ function Formulario({navigation}){
         if (formData.login == '2001' && formData.senha == '123'){
           setToken({token: 1});
           console.log(token);
-          navigate("/EntrarCaixa",  { replace: false }, {state: {userData: userData}});
+          navigate("/EntrarCaixa",  { replace: false }, {state: {userData: user}});
         }
 
         event.preventDefault();

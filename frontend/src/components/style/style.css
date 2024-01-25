@@ -311,3 +311,42 @@ h1 {
   position: relative;
   flex-wrap: nowrap;
 }
+
+.profile{
+  padding: 10px 10px 10px 10px;
+  position: fixed;
+  top: 0px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.profile .item-a {
+  display: flex;
+  position: relative;
+  width: 200px;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile .item-a svg{
+  display: flex;
+  position: relative;
+  float: left;
+  padding: 5px;
+
+}
+
+.profile .item-a .item .texts{
+  position: relative;
+  display: flex;
+  right: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  top: 30px;
+  padding: 5px;
+  width: 100px;
+}
+
