@@ -44,6 +44,8 @@ def send_data():
     login = data['login']
     senha = data['senha']
     reg = consultar_db('select * from public.operador where cpfop = \'' + login +'\' and senhaop = '+ str(senha))
+    ger = consultar_db('select * from public.gerente where cpfge = \'' + login +'\' and senhager = '+ str(senha))
+    #rep = consultar_db('select * from public.repositor where cpfrep = \'' + login +'\' and senharep = '+ str(senha))
     print("Dados banco:", reg)
     if(len(reg) > 0):
         df_bd = pd.DataFrame(reg, columns=['idope', 'cpfop','senhaop','opnome',
@@ -51,8 +53,17 @@ def send_data():
                                    'horainter'])
         df_bd.head()
         df_bd = df_bd.to_json()
-        data = {'error': False}
+        data = {'error': False,
+                'option': 1}
         result = 0
+    elif(len(ger) > 0):
+        df_bd = pd.DataFrame(reg, columns=['idope', 'cpfop','senhaop','opnome',
+                                   'datainiop','salarioop',
+                                   'horainter'])
+        df_bd.head()
+        df_bd = df_bd.to_json()
+        data = {'error': False,
+                'option': 2}
     else:
        df_bd = {}
        data = {'error': True}

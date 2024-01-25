@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import '../App.css';
 import logo from "../img/logo.png"
 import { Link, useNavigate } from 'react-router-dom';
+import StoreContext from '../components/Store/Context';
 import {withRouter} from 'react-router-dom';
 import Popup from '../components/popuplogin';
 import axios from 'axios';
@@ -12,6 +13,8 @@ import axios from 'axios';
 function Formulario({navigation}){
     //const history = useNavigate();
     const navigate = useNavigate()
+    const { setToken, token } = useContext(StoreContext);
+
     
     const [formData, setFormData] = useState({
         login: '2001', 
@@ -31,9 +34,14 @@ function Formulario({navigation}){
       axios.post('http://127.0.0.1:5000/api/sendDados', formData)
       .then(response => {
         
-        console.log('Resposta do servidor:', response.data);
         if(response.data.error != true){
-          navigate("EntrarCaixa",  { replace: false });
+          if(response.data.option == 1){
+            navigate("EntrarCaixa",  { replace: false });
+          } else if(response.data.option == 2){
+            setToken({token: 1});
+            navigate("Home",  { replace: false });
+          }
+          
         } else {
           window.alert("Erro ao fazer login! verifique seu usuario e senha e tente novamente.");
         }
