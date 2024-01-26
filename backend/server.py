@@ -17,7 +17,7 @@ def conecta_db():
   con = psycopg2.connect(host='localhost', 
                          database='supermercadoBD',
                          user='postgres', 
-                         password='147258')
+                         password='Valamiel@20')
   return con
 
 # Função para consultas no banco
@@ -57,9 +57,9 @@ def send_data():
                 'option': 1}
         result = 0
     elif(len(ger) > 0):
-        df_bd = pd.DataFrame(reg, columns=['idope', 'cpfop','senhaop','opnome',
-                                   'datainiop','salarioop',
-                                   'horainter'])
+        df_bd = pd.DataFrame(reg, columns=['idger', 'senhager','gernome','cpfge',
+                                   'datainiger','salarioger',
+                                   'formacao'])
         df_bd.head()
         df_bd = df_bd.to_json()
         data = {'error': False,

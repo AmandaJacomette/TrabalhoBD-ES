@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import '../App.css';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from "../img/logo.png"
 import logoSimples from "../img/logoSimples.png"
+import StoreContext from '../components/Store/Context';
 
-function EntrarCaixa(){
-
+function EntrarCaixa({userData}){
+  const { setToken, token } = useContext(StoreContext);
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         caixa: '20', 
         hora: '09:00', 
@@ -20,7 +23,8 @@ function EntrarCaixa(){
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        
+        navigate("/", {state: {userData: userData}});
+
         /*axios.post('http://127.0.0.1:5000/api/sendDados', formData)
           .then(response => {
             console.log('Resposta do servidor:', response.data);

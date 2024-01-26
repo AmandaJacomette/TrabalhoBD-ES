@@ -1,14 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:wght@200;500&family=Quicksand:wght@300;400;500;700&display=swap');
 
-*{
 
-    padding: 0;
-    outline: none;
-    box-sizing: content-box;
-    font-family: "Nunito Sans", sans-serif;
-  }
-
- 
 .form-all{
     height: 100%;
     width: 100%;

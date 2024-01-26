@@ -16,6 +16,8 @@
     box-shadow: #dbdddf 1px 1px 0px;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 20px;
+    display: flex;
+    flex-direction: column;
   }
   
   /* The navigation menu links */

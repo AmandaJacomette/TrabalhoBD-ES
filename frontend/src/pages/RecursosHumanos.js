@@ -73,7 +73,7 @@ function RecursosHumanos({userData}){
                         value={formData.idFunc}
                         onChange={handleInputChange} required/>
                         <div class="underline"></div>
-                    <label for="idFunc">
+                    <label htmlFor="idFunc">
                     ID Funcionario
                     </label>
               </div>
@@ -95,7 +95,7 @@ function RecursosHumanos({userData}){
                         value={formData.departamento}
                         onChange={handleInputChange} required/>
                   <div class="underline"></div>
-                <label for="departamento">
+                <label htmlFor="departamento">
                     Departamento
                     
                 </label>    
@@ -108,7 +108,7 @@ function RecursosHumanos({userData}){
                         value={formData.titulo}
                         onChange={handleInputChange} required />
                   <div class="underline"></div>
-                <label for="titulo">
+                <label htmlFor="titulo">
                     Titulo  
                 </label>     
                 </div>
@@ -126,7 +126,7 @@ function RecursosHumanos({userData}){
                 <br />
                 
                 <div class="underline-textarea"></div>
-                <label for="assunto">
+                <label htmlFor="assunto">
                     Assunto
                 </label>
                 <br />
