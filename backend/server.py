@@ -16,7 +16,7 @@ CORS(app)
 def conecta_db():
   con = psycopg2.connect(host='localhost', 
                          database='supermercadoBD',
-                         user='postgres', 
+                         user='postgres',
                          password='147258')
   return con
 

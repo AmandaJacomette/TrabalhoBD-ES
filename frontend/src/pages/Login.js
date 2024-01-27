@@ -10,6 +10,7 @@ import axios from 'axios';
 
 function Formulario({navigation}){
     //const history = useNavigate();
+    const postName = 'http://127.0.0.1:5000/api/sendDados';
     const navigate = useNavigate();
     const { setToken, token } = useContext(StoreContext);
 
@@ -63,7 +64,7 @@ function Formulario({navigation}){
 
     const handleSubmit = (event) => {
 
-      axios.post('http://127.0.0.1:5000/api/sendDados', formData)
+      axios.post('http://localhost:5000/api/sendDados', formData)
       .then(response => {
         
         console.log('Resposta do servidor:', response.data);
