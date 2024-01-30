@@ -78,7 +78,7 @@ const Home = ({userData}) => {
         <br/>
       </div>
       
-      : navigate("/login")}
+      : navigate("/")}
       
     </div>
   );
