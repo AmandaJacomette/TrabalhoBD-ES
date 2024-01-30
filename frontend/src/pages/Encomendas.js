@@ -21,7 +21,7 @@ function createRandomEnc(count = 5) {
         valor: 123.50 + (i/2),
         status: 'Encaminhado',
         solicitante: 'Funcionário 1',
-        fornecedorCNPJ: 'XXXXXX/XXXX'
+        fornecedorCNPJ: '11.111.111/0001-1' + i
       });
     }
   
@@ -42,7 +42,7 @@ function Encomendas({userData}){
             valor: 0,
             status: ' ',
             solicitante: 'Funcionário 1',
-            fornecedorCNPJ: 'XXXXXX/XXXX'
+            fornecedorCNPJ: '11.111.111/0001-11'
         
     });
 

@@ -34,6 +34,7 @@
 }
   .mform{
     height: 100%;
+    top: 50px;
     /* width: 1250px; */
     margin-left: 70px;
     background: #fff;
@@ -66,10 +67,14 @@
     height: 40px;
     margin: 0 20px;
     position: relative;
+    border-radius: 0px;
+    
   }
+
   form .form-row .textarea{
     height: 70px;
   }
+
   .input-data input,
   .textarea textarea{
     display: block;
@@ -78,6 +83,10 @@
     border: none;
     font-size: 17px;
     border-bottom: 2px solid rgba(0,0,0, 0.12);
+    font-style: italic;
+    color: rgba(53, 53, 53, 0.473);
+    text-align: left;
+  
   }
   .input-data input:focus ~ label, .textarea textarea:focus ~ label,
   .input-data input:valid ~ label, .textarea textarea:valid ~ label{
@@ -112,7 +121,7 @@
   }
   .input-data .underline{
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     height: 2px;
     width: 100%;
   }
@@ -181,6 +190,11 @@
   }
 
   @media (max-width: 700px) {
+    .mform {
+      top: 100px;
+      
+    }
+
     .mform .text{
       font-size: 30px;
     }
@@ -235,15 +249,25 @@ h1 {
 }
 
 .mtable{
-  display: contents;
+  display: inline-block;
+  width: 80%;
   height: 100%;
-  width: 1250px;
-  margin-left: 250px;
   background: #fff;
   padding: 15px 40px 10px 40px;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
   position: relative;
-  bottom: 220px;
+  /* margin-left: 240px; */
+  /* bottom: 220px; */
+}
+
+.mtable .text {
+  padding-left: 25px;
+    font-size: 22px;
+    font-weight: 600;
+    font-family: Monserrat;
+    background: #070707;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .table {
@@ -359,6 +383,54 @@ h1 {
   position: relative;
 }
 
-.containerEnc {
-  margin-left: 120px;
+@media screen and (min-width: 1460px){
+  .mform{
+    width: 80%;
+    margin-left: 250px;
+  }
+
+  .mtable {
+    width: 80%;
+   
+  }
+  
+}
+
+@media screen and (max-width: 1460px){
+  .mform{
+    width: 75%;
+    margin-left: 250px;
+  }
+
+  .mtable {
+    width: 75%;
+  
+  }
+  
+}
+
+@media screen and (max-width: 1250px){
+  .mform{
+    width: 70%;
+    margin-left: 250px;
+  }
+
+  .mtable {
+    width: 70%;
+   
+  }
+  
+}
+
+@media screen and (max-width: 1030px){
+  .mform{
+    width: 65%;
+    margin-left: 250px;
+  }
+
+  .mtable {
+    width: 65%;
+   
+  }
+  
 }

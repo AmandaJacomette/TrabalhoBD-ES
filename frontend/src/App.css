@@ -18,7 +18,7 @@
   src: url(./fonts/montserrat/Montserrat-Light.otf)
 }
 
-select, input{
+.form select, .form input{
   font-size: calc(4px + 2vmin);
   font-style: italic;
   background: #f2f2f32d;

@@ -10,6 +10,7 @@ import Encomendas from './Encomendas';
 import Relatorios from './Relatorios';
 import Departamento from './Departamento';
 import Usuario from './Usuario';
+import EstoqueePrateleiras from './EstoqueePrateleiras';
 
 const Home = ({userData}) => {
   const { setToken, token } = useContext(StoreContext);
@@ -40,10 +41,12 @@ const Home = ({userData}) => {
         {state.message === 0 ?
           <h2>Pagina Inicial</h2>
         : ''}
+
         {state.message === 1 ?
           <JornadadeTrabalho userData={userData}></JornadadeTrabalho>
           
         : ''}
+        
         {state.message === 2 ?
           <RecursosHumanos userData={userData}></RecursosHumanos>
           
@@ -57,10 +60,15 @@ const Home = ({userData}) => {
           
         : ''}
          {state.message === 5 ?
-          <Relatorios userData={userData}></Relatorios>
+          <EstoqueePrateleiras userData={userData}></EstoqueePrateleiras>
           
         : ''}
          {state.message === 6 ?
+          <Relatorios userData={userData}></Relatorios>
+          
+        : ''}
+
+        {state.message === 7 ?
           <Departamento userData={userData}></Departamento>
           
         : ''}
