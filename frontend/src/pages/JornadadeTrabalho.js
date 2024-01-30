@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
-
+import React, { useState, useContext, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../components/style/style.css'
+import StoreContext from '../components/Store/Context';
 import logo from "../img/logo.png"
 import logoSimples from "../img/logoSimples.png"
 
+function createRandomInfo(count = 5) {
+  const chamados = [];
+  
+  for (let i = 0; i < count; i++) {
+    chamados.push({
+      data: '0' + i + '-01-2024',
+      idFuncionario: 2001,
+      inicioPonto: '07:0' + i,
+      fimPonto:'13:0' + (i % 4)
+    });
+  }
+
+  return chamados;
+}
 /*
 <a className="item-a">
 
@@ -18,10 +33,87 @@ import logoSimples from "../img/logoSimples.png"
 
 function JornadadeTrabalho({userData}){
 
+  const navigate = useNavigate();
+  const [tableData, setTableData] = useState([]);
+  const { setToken, token } = useContext(StoreContext);
+  
+  
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      /*
+      const response = await fetch("https://cities-qd9i.onrender.com/agents");
+      const agents = await response.json();
+      
+      setTableData(agents);
+      */
+     console.log(tableData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleClearInfo = () => {
+    setTableData([]);
+  }
+
+const handleCreateInfo = () => {
+    const newUsers = createRandomInfo()
+    setTableData([...tableData, ...newUsers])
+}
+
+
     return (
-        <div className="jornada" >
-          
-        </div>
+      <div className="mform">
+         <div className = "text">Relatório</div>
+  <button className= "update-btn" onClick={handleCreateInfo}>Gerar</button>
+  <button className= "delete-btn" onClick={handleClearInfo}>Deletar</button>
+      <div className="mtable">
+  <div class="table">
+  <div class="table-header">
+      
+  <div class="header__item">
+    <a id="data" class="filter__link">
+    Data</a>
+    </div>
+    <div class="header__item">
+      <a id="idFunc" class="filter__link filter__link--number" >
+      ID
+      </a>
+      </div>
+      <div class="header__item">
+      <a id="inicioPonto" class="filter__link filter__link--number">
+      Início</a>
+      </div>
+      <div class="header__item">
+      <a id="fimPonto" class="filter__link filter__link--number">
+      Fim</a>
+      </div>
+      
+
+    </div>
+    <div class="table-content">
+      {
+        tableData.map((obj) => {
+          return (
+            <div class="table-row">
+              <div class="table-data">{obj.data}</div>
+              <div class="table-data">{obj.idFunc}</div>
+              <div class="table-data">{obj.inicioPonto}</div>
+              <div class="table-data">{obj.fimPonto}</div>
+             
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+    </div>
+    </div>
+
   );
 }
 
