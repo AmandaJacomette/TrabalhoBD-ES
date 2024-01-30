@@ -193,13 +193,11 @@ const handleCreateChamados = () => {
             </div>
         </form>
         <div className='Chamados'>
-        <div className="mtable">
-          <div class = "text">Chamados</div>
+        <div class = "text">Chamados</div>
       <button className= "update-btn" onClick={handleCreateChamados}>Criar</button>
       <button className= "delete-btn" onClick={handleClearChamados}>Deletar</button>
-      {
-
-      }
+   
+        <div className="mtable">
       <div class="table">
       <div class="table-header">
           

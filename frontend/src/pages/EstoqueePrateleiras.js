@@ -21,28 +21,46 @@ function createRandomProdutos(count = 5) {
   return chamados;
 }
 
+function createRandomEstoque(count = 5) {
+  const chamados = [];
+  
+  for (let i = 0; i < count; i++) {
+    chamados.push({
+      idEstoq: '1' + (i % 4),
+      secaoEstoq: 'Frios',
+      qtdeMaxProdEstoq: 500 * ((i) % 4 + 1),
+      qtdeMinProdEstoq: 250,
+      qtdeAtualProdEstoq: 415 + ((i) % 4 + 1)
+     
+    });
+  }
+
+  return chamados;
+}
+
+function createRandomPrateleira(count = 10) {
+  const chamados = [];
+  
+  for (let i = 0; i < count; i++) {
+    chamados.push({
+      idPrat: '5' + (i % 4),
+      secaoPrat: 'HortiFruti',
+      qtdeMaxProdPrat: 1600 * ((i) % 4 + 1),
+      qtdeMinProdPrat: 850,
+      qtdeAtualProdPrat: 935 + ((i) % 4 + 1)
+     
+    });
+  }
+
+  return chamados;
+}
+
 function EstoqueePrateleiras({userData}){
   const navigate = useNavigate();
   const [tableData, setTableData] = useState([]);
   const { setToken, token } = useContext(StoreContext);
-  
-  const[formData, setProdutos] = useState({
-    idProd: '3009',
-    nomeProd: 'Produto 0',
-    valorProd: 15.50,
-    fornecedorCNPJ: '19.999.999/0001-10',
-    codBarra: '5901234123467'
-  });
-  
-  const handleInputChange = (event) => {
-      const { name, value } = event.target;
-      setProdutos((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-  };
 
-  
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -73,45 +91,66 @@ function EstoqueePrateleiras({userData}){
       });*/
   };
 
-  const handleClearProducts = () => {
+  const handleClearEstoque = () => {
     setTableData([]);
   }
 
-const handleCreateProducts = () => {
-    const newUsers = createRandomProdutos()
+const handleCreateEstoque = () => {
+    const newUsers = createRandomEstoque()
     setTableData([...tableData, ...newUsers])
 }
 
 
+const handleClearPrats = () => {
+  setTableData([]);
+}
+
+const handleCreatePrats = () => {
+  const newUsers = createRandomPrateleira()
+  setTableData([...tableData, ...newUsers])
+}
+
+const handleReporEstoque = () => {
+  console.log("Funcionalidade de Reposição de Estoque");
+}
+
+const handleReporPrateleira = () => {
+  console.log("Funcionalidade de Reposição de Prateleira");
+}
+
+
+
     return (
+      <div className="container">
       <div className="mform">
          <div className = "text">Estoque</div>
-  <button className= "update-btn" onClick={handleCreateProducts}>Criar</button>
-  <button className= "delete-btn" onClick={handleClearProducts}>Deletar</button>
+  <button className= "update-btn" onClick={handleCreateEstoque}>Criar</button>
+  <button className= "delete-btn" onClick={handleClearEstoque}>Deletar</button>
+  <button className= "update-btn" onClick={handleReporEstoque}>Repor</button>
       <div className="mtable">
   <div class="table">
   <div class="table-header">
       
   <div class="header__item">
-    <a id="idProd" class="filter__link">
+    <a id="idEstoq" class="filter__link">
       ID</a>
     </div>
     <div class="header__item">
-      <a id="nomeProd" class="filter__link filter__link--number" >
-       Nome
+      <a id="secaoEstoq" class="filter__link filter__link--number" >
+      Seção
       </a>
       </div>
       <div class="header__item">
-      <a id="valorProd" class="filter__link filter__link--number">
-        Valor</a>
+      <a id="qtdetMinProdEstoq" class="filter__link filter__link--number">
+      Quantidade Mínima de Produtos</a>
       </div>
       <div class="header__item">
-      <a id="fornecedorCNPJ" class="filter__link filter__link--number">
-        Fornecedor </a>
+      <a id="qtdeMaxProdEstoq" class="filter__link filter__link--number">
+      Quantidade Máxima de Produtos</a>
       </div>
       <div class="header__item">
-      <a id="codBarra" class="filter__link filter__link--number">
-        Código de Barra</a>
+      <a id="qtdeAtualProdEstoq" class="filter__link filter__link--number">
+      Quantidade Atual de Produtos</a>
       </div>
 
 
@@ -121,11 +160,11 @@ const handleCreateProducts = () => {
         tableData.map((obj) => {
           return (
             <div class="table-row">
-              <div class="table-data">{obj.idProd}</div>
-              <div class="table-data">{obj.nomeProd}</div>
-              <div class="table-data">{obj.valorProd}</div>
-              <div class="table-data">{obj.fornecedorCNPJ}</div>
-              <div class="table-data">{obj.codBarra}</div>
+              <div class="table-data">{obj.idEstoq}</div>
+              <div class="table-data">{obj.secaoEstoq}</div>
+              <div class="table-data">{obj.qtdeMinProdEstoq}</div>
+              <div class="table-data">{obj.qtdeMaxProdEstoq}</div>
+              <div class="table-data">{obj.qtdeAtualProdEstoq}</div>
             </div>
           );
         })
@@ -134,7 +173,58 @@ const handleCreateProducts = () => {
   </div>
     </div>
     </div>
+    <div className="mform">
+         <div className = "text">Prateleiras</div>
+  <button className= "update-btn" onClick={handleCreatePrats}>Criar</button>
+  <button className= "delete-btn" onClick={handleClearPrats}>Deletar</button>
+  <button className= "update-btn" onClick={handleReporPrateleira}>Repor</button>
+      <div className="mtable">
+  <div class="table">
+  <div class="table-header">
+      
+  <div class="header__item">
+    <a id="idPrat" class="filter__link">
+      ID</a>
+    </div>
+    <div class="header__item">
+      <a id="secaoPrat" class="filter__link filter__link--number" >
+      Seção
+      </a>
+      </div>
+      <div class="header__item">
+      <a id="qtdetMinProdPrat" class="filter__link filter__link--number">
+      Quantidade Mínima de Produtos</a>
+      </div>
+      <div class="header__item">
+      <a id="qtdeMaxProdPrat" class="filter__link filter__link--number">
+      Quantidade Máxima de Produtos</a>
+      </div>
+      <div class="header__item">
+      <a id="qtdeAtualProdPrat" class="filter__link filter__link--number">
+      Quantidade Atual de Produtos</a>
+      </div>
 
+
+    </div>
+    <div class="table-content">
+      {
+        tableData.map((obj) => {
+          return (
+            <div class="table-row">
+              <div class="table-data">{obj.idPrat}</div>
+              <div class="table-data">{obj.secaoPrat}</div>
+              <div class="table-data">{obj.qtdeMinProdPrat}</div>
+              <div class="table-data">{obj.qtdeMaxProdPrat}</div>
+              <div class="table-data">{obj.qtdeAtualProdPrat}</div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+    </div>
+    </div>
+    </div>
   );
 }
 
