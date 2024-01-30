@@ -9,6 +9,7 @@ import VendasRealizadas from './VendasRealizadas';
 import Encomendas from './Encomendas';
 import Relatorios from './Relatorios';
 import Departamento from './Departamento';
+import Usuario from './Usuario';
 
 const Home = ({userData}) => {
   const { setToken, token } = useContext(StoreContext);
@@ -25,6 +26,7 @@ const Home = ({userData}) => {
   }
 
   useEffect(() => {
+    console.log(userData);
     console.log(state);
     console.log(token);
   })
@@ -33,38 +35,38 @@ const Home = ({userData}) => {
     <div className="main">
       { token ?
         <div>
-        <Sidebar userData={userData} newMessage={ handleClick } token={token}></Sidebar>
-        {state.message == 0 ?
+        <Sidebar userData={userData} newMessage={ handleClick }></Sidebar>
+        <Usuario userData={userData}></Usuario>
+        {state.message === 0 ?
           <h2>Pagina Inicial</h2>
         : ''}
-        {state.message == 1 ?
+        {state.message === 1 ?
           <JornadadeTrabalho userData={userData}></JornadadeTrabalho>
           
         : ''}
-        {state.message == 2 ?
+        {state.message === 2 ?
           <RecursosHumanos userData={userData}></RecursosHumanos>
           
         : ''}
-         {state.message == 3 ?
+         {state.message === 3 ?
           <VendasRealizadas userData={userData}></VendasRealizadas>
           
         : ''}
-         {state.message == 4 ?
+         {state.message === 4 ?
           <Encomendas userData={userData}></Encomendas>
           
         : ''}
-         {state.message == 5 ?
+         {state.message === 5 ?
           <Relatorios userData={userData}></Relatorios>
           
         : ''}
-         {state.message == 6 ?
+         {state.message === 6 ?
           <Departamento userData={userData}></Departamento>
           
         : ''}
-         {state.message == 7 ?
-          <div></div>
+      
           
-        : ''}
+        
         <br/>
       </div>
       

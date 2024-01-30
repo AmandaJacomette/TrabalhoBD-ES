@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import {withRouter} from 'react-router-dom';
@@ -8,18 +8,38 @@ import axios from 'axios';
 import logo from "../img/logo.png"
 import Popup from '../components/popuplogin';
 import '../components/style/style.css'
+import StoreContext from '../components/Store/Context';
 
+function createRandomChamados(count = 5) {
+  const chamados = [];
+  
+  for (let i = 0; i < count; i++) {
+    chamados.push({
+      idFunc: '200' + i,
+      nome: 'Funcionario 1',
+      departamento: '2',
+      titulo: 'Chamado Teste ' + i,
+      assunto: 'Assunto do Chamado ' + i,
+      status: 'Encaminhado'
+    });
+  }
+
+  return chamados;
+}
 
 function RecursosHumanos({userData}){
     //const history = useNavigate();
     const navigate = useNavigate();
+    const [tableData, setTableData] = useState([]);
+    const { setToken, token } = useContext(StoreContext);
     
     const[formData, setChamados] = useState({
             idFunc: '2001',
             nome: 'Funcionario',
             departamento: '2',
             titulo: 'Chamado Teste',
-            assunto: 'Assunto do Chamado'
+            assunto: 'Assunto do Chamado',
+            status: ' '
     });
     
     const handleInputChange = (event) => {
@@ -28,6 +48,25 @@ function RecursosHumanos({userData}){
           ...prevData,
           [name]: value,
         }));
+    };
+
+    
+    useEffect(() => {
+      fetchData();
+    }, []);
+  
+    const fetchData = async () => {
+      try {
+        /*
+        const response = await fetch("https://cities-qd9i.onrender.com/agents");
+        const agents = await response.json();
+        
+        setTableData(agents);
+        */
+       console.log(tableData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
     /*
@@ -56,6 +95,16 @@ function RecursosHumanos({userData}){
       });*/
   };
 
+  const handleClearChamados = () => {
+    setTableData([]);
+  }
+
+const handleCreateChamados = () => {
+    const newUsers = createRandomChamados()
+    setTableData([...tableData, ...newUsers])
+}
+
+
     return (
       <div className="mform">
         <div class = "text">Recursos Humanos</div>
@@ -73,7 +122,7 @@ function RecursosHumanos({userData}){
                         value={formData.idFunc}
                         onChange={handleInputChange} required/>
                         <div class="underline"></div>
-                    <label htmlFor="idFunc">
+                    <label for="idFunc">
                     ID Funcionario
                     </label>
               </div>
@@ -95,7 +144,7 @@ function RecursosHumanos({userData}){
                         value={formData.departamento}
                         onChange={handleInputChange} required/>
                   <div class="underline"></div>
-                <label htmlFor="departamento">
+                <label for="departamento">
                     Departamento
                     
                 </label>    
@@ -108,7 +157,7 @@ function RecursosHumanos({userData}){
                         value={formData.titulo}
                         onChange={handleInputChange} required />
                   <div class="underline"></div>
-                <label htmlFor="titulo">
+                <label for="titulo">
                     Titulo  
                 </label>     
                 </div>
@@ -126,7 +175,7 @@ function RecursosHumanos({userData}){
                 <br />
                 
                 <div class="underline-textarea"></div>
-                <label htmlFor="assunto">
+                <label for="assunto">
                     Assunto
                 </label>
                 <br />
@@ -144,7 +193,64 @@ function RecursosHumanos({userData}){
             </div>
         </form>
         <div className='Chamados'>
+        <div className="mtable">
           <div class = "text">Chamados</div>
+      <button className= "update-btn" onClick={handleCreateChamados}>Criar</button>
+      <button className= "delete-btn" onClick={handleClearChamados}>Deletar</button>
+      {
+
+      }
+      <div class="table">
+      <div class="table-header">
+          
+      <div class="header__item">
+        <a id="idFunc" class="filter__link">
+          ID</a>
+        </div>
+        <div class="header__item">
+          <a id="nome" class="filter__link filter__link--number" >
+           Nome
+          </a>
+          </div>
+          <div class="header__item">
+          <a id="departamento" class="filter__link filter__link--number">
+            Departamento</a>
+          </div>
+          <div class="header__item">
+          <a id="titulo" class="filter__link filter__link--number">
+            Titulo</a>
+          </div>
+          <div class="header__item">
+          <a id="assunto" class="filter__link filter__link--number">
+            Assunto</a>
+          </div>
+          <div class="header__item">
+          <a id="status" class="filter__link filter__link--number">
+           Status</a>
+          </div>
+
+
+        </div>
+        <div class="table-content">
+          {
+            tableData.map((obj) => {
+              return (
+                <div class="table-row">
+                  <div class="table-data">{obj.idFunc}</div>
+                  <div class="table-data">{obj.nome}</div>
+                  <div class="table-data">{obj.departamento}</div>
+                  <div class="table-data">{obj.titulo}</div>
+                  <div class="table-data">{obj.quantidade}</div>
+                  <div class="table-data">{obj.assunto}</div>
+                  <div class="table-data">{obj.status}</div>
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
+        </div>
+
         </div>
       </div>
         

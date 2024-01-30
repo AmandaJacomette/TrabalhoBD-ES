@@ -1,25 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 // import $ from 'jquery';
 
-import '../App.css';
+import '../components/style/style.css';
 import logo from "../img/logo.png"
 import Popup from '../components/popuplogin';
+import StoreContext from '../components/Store/Context';
+
+function createRandomVendas(count = 5) {
+  const vendas = [];
+  
+  for (let i = 0; i < count; i++) {
+    vendas.push({
+      idVenda: 440 + i,
+      idFunc: 2001,
+      valor: 247.50 + (i * 5),
+      dataVenda: '01-01-2024'
+    });
+  }
+
+  return vendas;
+}
 
 
 function VendasRealizadas({userData}){
     //const history = useNavigate();
     const navigate = useNavigate();
+    const { setToken, token } = useContext(StoreContext);
+    const [tableData, setTableData] = useState([]);
     
     const[formData, setVenda] = useState({
-        venda: {
             idVenda: 0,
             idFunc: 0,
             valor: 0,
-            dataVenda: ' '
-        }
+            dataVenda: '01-01-2024'
+        
     });
 
     const sendVendas = (data) => {
@@ -60,6 +77,33 @@ function VendasRealizadas({userData}){
   }
   */
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      /*
+      const response = await fetch("https://cities-qd9i.onrender.com/agents");
+      const agents = await response.json();
+      
+      setTableData(agents);
+      */
+     console.log(tableData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleClearVendas = () => {
+    setTableData([]);
+  }
+
+const handleCreateVendas = () => {
+    const newUsers = createRandomVendas()
+    setTableData([...tableData, ...newUsers])
+}
+
   const handleSubmit = (event) => {
     event.preventDefault();
     
@@ -72,52 +116,129 @@ function VendasRealizadas({userData}){
       });*/
   };
 
-    return (
-      <div className="App-header">
-        <form onSubmit={handleSubmit}>
-            Nova Venda
-            <div className='form'>
-                <label>
-                    ID:<br/>
-                    <input 
-                        name="idVenda" 
-                        className='dadosVenda' 
-                        value={formData.venda.idVenda}
-                        onChange={handleInputChange} />
-                </label>
-                <label>
-                    ID Funcionario:<br/>
-                    <input 
-                        name="idFuncionario" 
-                        className='dadosVenda' 
-                        value={formData.venda.idFunc}
-                        onChange={handleInputChange} />
-                </label>
-                <label>
-                    Data:<br/>
-                    <input 
-                        name="dataVenda" 
-                        className='dadosVenda' 
-                        value={formData.venda.dataVenda}
-                        onChange={handleInputChange} />
-                </label>
-                <label>
-                    Valor:<br/>
-                    <input 
-                        name="valor" 
-                        className='dadosVenda' 
-                        value={formData.venda.valor}
-                        onChange={handleInputChange} />
-                </label>
-                <button type="submit"> Criar</button>
-                
-            </div>
-        </form>
-        <div className='VendasFeitas'>
 
-        </div>
-      </div>
+
+    return (
+      <div className="container">
+      <div className="mform">
+      <div className = "text">Vendas</div>
+      <form onSubmit={handleSubmit}>
+         
+          <div className='form-all'>
+            <div class = "text">
+              Nova Venda
+            </div>
+            <div class="form-row">
+            <div class="input-data">
+              <input 
+                      name="idVenda" 
+                      className='dadosVenda' 
+                      value={formData.id}
+                      onChange={handleInputChange} required/>
+                      <div class="underline"></div>
+                  <label for="idVenda">
+                  ID
+                  </label>
+            </div>
+            <div class="input-data">
+              <input 
+                      name="idFunc" 
+                      className='dadosVenda' 
+                      value={formData.idFunc}
+                      onChange={handleInputChange} required/>
+                      <div class="underline"></div>
+                  <label for="idFunc">
+                  ID Funcionário
+                  </label>
+            </div>
+              
+              <div class = "input-data">
+                <input 
+                      name="data" 
+                      className='dadosVenda' 
+                      value={formData.data}
+                      onChange={handleInputChange} required />
+                <div class="underline"></div>
+              <label for="data">
+                  Data  
+              </label>     
+              </div>
+              <div class="input-data">
+              <input 
+                      name="valor" 
+                      className='dadosVenda' 
+                      value={formData.valor}
+                      onChange={handleInputChange} required/>
+                      <div class="underline"></div>
+                  <label for="valor">
+                  Valor
+                  </label>
+            </div>
+            </div>
+       
+            
+              <div class="form-row submit-btn">
+                <div class="input-data">
+                  <div class="inner"></div>
+                    <input type="submit" value="submit"/>
+
+                </div>
+              </div>
+              
+              
+          </div>
+      </form>
+      <div className='encomendasFeitas'>
+        <div className="mtable">
+        <div class = "text">Vendas Feitas</div>
+    <button className= "update-btn" onClick={handleCreateVendas}>Criar</button>
+    <button className= "delete-btn" onClick={handleClearVendas}>Deletar</button>
+    {
+
+    }
+    <div class="table">
+    <div class="table-header">
         
+    <div class="header__item">
+      <a id="idVenda" class="filter__link">
+        ID</a>
+      </div>
+      <div class="header__item">
+        <a id="idFunc" class="filter__link filter__link--number" >
+         ID Funcionário
+        </a>
+        </div>
+        <div class="header__item">
+        <a id="data" class="filter__link filter__link--number">
+          Data</a>
+        </div>
+        <div class="header__item">
+        <a id="valor" class="filter__link filter__link--number">
+          Valor</a>
+        </div>
+
+      </div>
+      <div class="table-content">
+        {
+          tableData.map((obj) => {
+            return (
+              <div class="table-row">
+                <div class="table-data">{obj.idVenda}</div>
+                <div class="table-data">{obj.idFunc}</div>
+                <div class="table-data">{obj.data}</div>
+                <div class="table-data">{obj.valor}</div>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+      </div>
+
+      </div>
+    </div>
+      
+    </div>
         
   );
 }

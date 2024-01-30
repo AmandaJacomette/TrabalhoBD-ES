@@ -17,7 +17,7 @@ def conecta_db():
   con = psycopg2.connect(host='localhost', 
                          database='supermercadoBD',
                          user='postgres', 
-                         password='Valamiel@20')
+                         password='147258')
   return con
 
 # Função para consultas no banco

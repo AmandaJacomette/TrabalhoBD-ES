@@ -1,4 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:wght@200;500&family=Quicksand:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
+
+@font-face {
+  font-family: Monserrat;
+  src: url(../../fonts/montserrat/Montserrat-Light.otf)
+}
+
+*{
+
+    padding: 0;
+    outline: none;
+    box-sizing: content-box;
+    font-family: "Nunito Sans", sans-serif;
+  }
+
+  .bodyNav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 10px;
+    font-family: Monserrat;
+    background: #ffffff;
+  }
 
 
 .form-all{
@@ -10,20 +34,21 @@
 }
   .mform{
     height: 100%;
-    width: 1250px;
-    margin-left: 250px;
+    /* width: 1250px; */
+    margin-left: 70px;
     background: #fff;
     padding: 15px 40px 10px 40px;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    /* box-shadow: 0px 0px 10px rgba(0,0,0,0.1); */
     position: relative;
-    bottom: 220px;
+    /* bottom: 120px; */
+
   }
 
   .mform .text{
     padding-left: 25px;
     font-size: 22px;
     font-weight: 600;
-    font-family: 'Poppins', sans-serif;
+    font-family: Monserrat;
     background: #070707;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -175,4 +200,165 @@
 
 .Chamados {
   padding: 10px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.delete-btn{
+  display: inline-block;
+  font-size: 15px;
+  height: 15px;
+  width: 120px;
+  margin: 10px;
+}
+.update-btn {
+  display: inline-block;
+  font-size: 15px;
+  height: 15px;
+  width: 120px;
+  margin: 10px;
+}
+
+.update-btn:hover {
+  background: #CF5D67;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0px 4px 10px #CF5D67;
+}
+.delete-btn:hover {
+  background: #CF5D67;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0px 4px 10px #CF5D67;
+}
+
+.mtable{
+  display: contents;
+  height: 100%;
+  width: 1250px;
+  margin-left: 250px;
+  background: #fff;
+  padding: 15px 40px 10px 40px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  position: relative;
+  bottom: 220px;
+}
+
+.table {
+	width:100%;
+	border:1px solid #EEEEEE;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+  padding: 10px;
+}
+
+.table-header {
+	display:flex;
+	width:100%;
+	background:#CF5D67;
+	padding:(12px * 1.5) 0;
+  align-items: center;
+}
+
+.table-row {
+	display:flex;
+	width:100%;
+	padding:(12px * 1.5) 0;
+	
+	&:nth-of-type(odd) {
+		background: #fff5f5;
+	}
+}
+
+.table-data, .header__item {
+	flex: 1 1 20%;
+	text-align: center;
+  font: "Nunito Sans", sans-serif; 
+}
+
+.header__item {
+	
+  padding: 10px;
+  font: "Nunito Sans", sans-serif; 
+}
+
+.filter__link {
+	color:white;
+	text-decoration: none;
+	position:relative;
+	display:inline-block;
+	padding-left: 24px;
+	padding-right: 24px;
+	
+	&::after {
+		content:'';
+		position:absolute;
+		right:-(12px * 1.5);
+		color:white;
+		font-size: 12px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	
+	&.desc::after {
+		content: '(desc)';
+	}
+
+	&.asc::after {
+		content: '(asc)';
+	}
+	
+}
+
+.encomendasFeitas{
+  display: inline-block;
+  position: relative;
+  flex-wrap: nowrap;
+}
+
+.profile{
+  padding: 10px 10px 10px 10px;
+  position: fixed;
+  top: 0px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.profile .item-a {
+  display: flex;
+  position: relative;
+  width: 200px;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile .item-a svg{
+  display: flex;
+  position: relative;
+  float: left;
+  padding: 5px;
+
+}
+
+.profile .item-a .item .texts{
+  position: relative;
+  display: flex;
+  right: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  top: 30px;
+  padding: 5px;
+  width: 100px;
+}
+
+.container {
+  position: relative;
+}
+
+.containerEnc {
+  margin-left: 120px;
 }
