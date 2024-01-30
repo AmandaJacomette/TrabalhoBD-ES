@@ -15,7 +15,7 @@ function createRandomVendas(count = 5) {
   for (let i = 0; i < count; i++) {
     vendas.push({
       idVenda: 440 + i,
-      idFunc: 2001,
+      cpf: 2001,
       valor: 247.50 + (i * 5),
       dataVenda: '01-01-2024'
     });
@@ -33,7 +33,7 @@ function VendasRealizadas({userData}){
     
     const[formData, setVenda] = useState({
             idVenda: 0,
-            idFunc: 0,
+            cpf: 0,
             valor: 0,
             dataVenda: '01-01-2024'
         
@@ -129,28 +129,6 @@ const handleCreateVendas = () => {
               Nova Venda
             </div>
             <div class="form-row">
-            <div class="input-data">
-              <input 
-                      name="idVenda" 
-                      className='dadosVenda' 
-                      value={formData.id}
-                      onChange={handleInputChange} required/>
-                      <div class="underline"></div>
-                  <label for="idVenda">
-                  ID
-                  </label>
-            </div>
-            <div class="input-data">
-              <input 
-                      name="idFunc" 
-                      className='dadosVenda' 
-                      value={formData.idFunc}
-                      onChange={handleInputChange} required/>
-                      <div class="underline"></div>
-                  <label for="idFunc">
-                  ID Funcionário
-                  </label>
-            </div>
               
               <div class = "input-data">
                 <input 
@@ -202,7 +180,7 @@ const handleCreateVendas = () => {
         ID</a>
       </div>
       <div class="header__item">
-        <a id="idFunc" class="filter__link filter__link--number" >
+        <a id="cpf" class="filter__link filter__link--number" >
          ID Funcionário
         </a>
         </div>
@@ -222,7 +200,7 @@ const handleCreateVendas = () => {
             return (
               <div class="table-row">
                 <div class="table-data">{obj.idVenda}</div>
-                <div class="table-data">{obj.idFunc}</div>
+                <div class="table-data">{obj.cpf}</div>
                 <div class="table-data">{obj.data}</div>
                 <div class="table-data">{obj.valor}</div>
               </div>

@@ -66,10 +66,6 @@ function Departamento({userData}){
       <div class="table">
       <div class="table-header">
           
-      <div class="header__item">
-        <a id="idFunc" class="filter__link">
-          ID</a>
-        </div>
         <div class="header__item">
           <a id="cpf" class="filter__link filter__link--number" >
             CPF
@@ -102,7 +98,6 @@ function Departamento({userData}){
             tableData.map((obj) => {
               return (
                 <div class="table-row">
-                  <div class="table-data">{obj.userId}</div>
                   <div class="table-data">{obj.cpf}</div>
                   <div class="table-data">{obj.name}</div>
                   <div class="table-data">{obj.funcao}</div>

@@ -15,7 +15,7 @@ function createRandomChamados(count = 5) {
   
   for (let i = 0; i < count; i++) {
     chamados.push({
-      idFunc: '200' + i,
+      cpf: '200' + i,
       nome: 'Funcionario 1',
       departamento: '2',
       titulo: 'Chamado Teste ' + i,
@@ -34,7 +34,7 @@ function RecursosHumanos({userData}){
     const { setToken, token } = useContext(StoreContext);
     
     const[formData, setChamados] = useState({
-            idFunc: '2001',
+            cpf: '2001',
             nome: 'Funcionario',
             departamento: '2',
             titulo: 'Chamado Teste',
@@ -117,17 +117,6 @@ const handleCreateChamados = () => {
               <div class="form-row">
               <div class="input-data">
                 <input 
-                        name="idFunc" 
-                        className='dadosChamado' 
-                        value={formData.idFunc}
-                        onChange={handleInputChange} required/>
-                        <div class="underline"></div>
-                    <label for="idFunc">
-                    ID Funcionario
-                    </label>
-              </div>
-              <div class="input-data">
-                <input 
                         name="nome" 
                         className='dadosChamado' 
                         value={formData.nome}
@@ -201,10 +190,6 @@ const handleCreateChamados = () => {
       <div class="table">
       <div class="table-header">
           
-      <div class="header__item">
-        <a id="idFunc" class="filter__link">
-          ID</a>
-        </div>
         <div class="header__item">
           <a id="nome" class="filter__link filter__link--number" >
            Nome
@@ -234,7 +219,6 @@ const handleCreateChamados = () => {
             tableData.map((obj) => {
               return (
                 <div class="table-row">
-                  <div class="table-data">{obj.idFunc}</div>
                   <div class="table-data">{obj.nome}</div>
                   <div class="table-data">{obj.departamento}</div>
                   <div class="table-data">{obj.titulo}</div>

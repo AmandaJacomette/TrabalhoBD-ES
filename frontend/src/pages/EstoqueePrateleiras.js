@@ -130,11 +130,7 @@ const handleReporPrateleira = () => {
       <div className="mtable">
   <div class="table">
   <div class="table-header">
-      
-  <div class="header__item">
-    <a id="idEstoq" class="filter__link">
-      ID</a>
-    </div>
+    
     <div class="header__item">
       <a id="secaoEstoq" class="filter__link filter__link--number" >
       Seção
@@ -160,7 +156,6 @@ const handleReporPrateleira = () => {
         tableData.map((obj) => {
           return (
             <div class="table-row">
-              <div class="table-data">{obj.idEstoq}</div>
               <div class="table-data">{obj.secaoEstoq}</div>
               <div class="table-data">{obj.qtdeMinProdEstoq}</div>
               <div class="table-data">{obj.qtdeMaxProdEstoq}</div>
@@ -181,11 +176,7 @@ const handleReporPrateleira = () => {
       <div className="mtable">
   <div class="table">
   <div class="table-header">
-      
-  <div class="header__item">
-    <a id="idPrat" class="filter__link">
-      ID</a>
-    </div>
+    
     <div class="header__item">
       <a id="secaoPrat" class="filter__link filter__link--number" >
       Seção
@@ -211,7 +202,7 @@ const handleReporPrateleira = () => {
         tableData.map((obj) => {
           return (
             <div class="table-row">
-              <div class="table-data">{obj.idPrat}</div>
+        
               <div class="table-data">{obj.secaoPrat}</div>
               <div class="table-data">{obj.qtdeMinProdPrat}</div>
               <div class="table-data">{obj.qtdeMaxProdPrat}</div>

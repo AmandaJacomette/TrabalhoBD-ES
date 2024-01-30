@@ -11,7 +11,7 @@ function createRandomInfo(count = 5) {
   for (let i = 0; i < count; i++) {
     chamados.push({
       data: '0' + i + '-01-2024',
-      idFuncionario: 2001,
+      cpf: 2001,
       inicioPonto: '07:0' + i,
       fimPonto:'13:0' + (i % 4)
     });
@@ -80,8 +80,8 @@ const handleCreateInfo = () => {
     Data</a>
     </div>
     <div class="header__item">
-      <a id="idFunc" class="filter__link filter__link--number" >
-      ID
+      <a id="cpf" class="filter__link filter__link--number" >
+      CPF
       </a>
       </div>
       <div class="header__item">
@@ -101,7 +101,7 @@ const handleCreateInfo = () => {
           return (
             <div class="table-row">
               <div class="table-data">{obj.data}</div>
-              <div class="table-data">{obj.idFunc}</div>
+              <div class="table-data">{obj.cpf}</div>
               <div class="table-data">{obj.inicioPonto}</div>
               <div class="table-data">{obj.fimPonto}</div>
              

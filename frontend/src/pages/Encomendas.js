@@ -135,17 +135,6 @@ function Encomendas({userData}){
               <div class="form-row">
               <div class="input-data">
                 <input 
-                        name="id" 
-                        className='dadosEncomenda' 
-                        value={formData.id}
-                        onChange={handleInputChange} required/>
-                        <div class="underline"></div>
-                    <label for="id">
-                    ID
-                    </label>
-              </div>
-              <div class="input-data">
-                <input 
                         name="solicitante" 
                         className='dadosEncomenda' 
                         value={formData.solicitante}
@@ -155,18 +144,7 @@ function Encomendas({userData}){
                     Nome Solicitante
                     </label>
               </div>
-                
-                <div class = "input-data">
-                  <input 
-                        name="fornecedorCNPJ" 
-                        className='dadosEncomenda' 
-                        value={formData.fornecedorCNPJ}
-                        onChange={handleInputChange} required />
-                  <div class="underline"></div>
-                <label for="fornecedorCNPJ">
-                    CNPJ Fornecedor  
-                </label>     
-                </div>
+              
                 
               </div>
               
@@ -194,28 +172,6 @@ function Encomendas({userData}){
                     Quantidade do Produto 
                 </label>     
                 </div>
-                <div class="input-data">
-                  <input 
-                        name="valor" 
-                        className='dadosEncomenda' 
-                        value={formData.valor}
-                        onChange={handleInputChange} required/>
-                  <div class="underline"></div>
-                <label for="valor">
-                    Valor Total
-                </label>    
-                </div>
-                <div class="input-data">
-                  <input 
-                        name="datapedido" 
-                        className='dadosEncomenda' 
-                        value={formData.datapedido}
-                        onChange={handleInputChange} required/>
-                  <div class="underline"></div>
-                <label for="datapedido">
-                    Data do Pedido
-                </label>    
-                </div>
               </div>
               
                 <div class="form-row submit-btn">
@@ -238,10 +194,6 @@ function Encomendas({userData}){
       <div class="table">
       <div class="table-header">
           
-      <div class="header__item">
-        <a id="id" class="filter__link">
-          ID Encomenda</a>
-        </div>
         <div class="header__item">
           <a id="nome" class="filter__link filter__link--number" >
            Nome Solicitante
@@ -278,7 +230,6 @@ function Encomendas({userData}){
             tableData.map((obj) => {
               return (
                 <div class="table-row">
-                  <div class="table-data">{obj.id}</div>
                   <div class="table-data">{obj.solicitante}</div>
                   <div class="table-data">{obj.fornecedorCNPJ}</div>
                   <div class="table-data">{obj.cdprod}</div>
