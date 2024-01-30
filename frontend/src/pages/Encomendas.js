@@ -230,13 +230,11 @@ function Encomendas({userData}){
             </div>
         </form>
         <div className='encomendasFeitas'>
+        <div class = "text">Encomendas Feitas</div>
+        <button className= "update-btn" onClick={handleCreateEnc}>Criar</button>
+        <button className= "delete-btn" onClick={handleClearEnc}>Deletar</button>
           <div className="mtable">
-          <div class = "text">Encomendas Feitas</div>
-      <button className= "update-btn" onClick={handleCreateEnc}>Criar</button>
-      <button className= "delete-btn" onClick={handleClearEnc}>Deletar</button>
-      {
-
-      }
+     
       <div class="table">
       <div class="table-header">
           

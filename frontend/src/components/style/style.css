@@ -271,7 +271,6 @@ h1 {
 }
 
 .table {
-	width:100%;
 	border:1px solid #EEEEEE;
   box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
   padding: 10px;
@@ -339,6 +338,8 @@ h1 {
   display: inline-block;
   position: relative;
   flex-wrap: nowrap;
+  padding: 10px;
+  margin-top: 10px;
 }
 
 .profile{
@@ -393,6 +394,10 @@ h1 {
     width: 80%;
    
   }
+
+  .table{
+    width:1150px;
+  }
   
 }
 
@@ -405,6 +410,10 @@ h1 {
   .mtable {
     width: 75%;
   
+  }
+
+  .table{
+    width:100%;
   }
   
 }

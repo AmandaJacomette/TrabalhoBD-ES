@@ -189,13 +189,11 @@ const handleCreateVendas = () => {
           </div>
       </form>
       <div className='encomendasFeitas'>
-        <div className="mtable">
-        <div class = "text">Vendas Feitas</div>
+      <div class = "text">Vendas Feitas</div>
     <button className= "update-btn" onClick={handleCreateVendas}>Criar</button>
     <button className= "delete-btn" onClick={handleClearVendas}>Deletar</button>
-    {
-
-    }
+        <div className="mtable">
+   
     <div class="table">
     <div class="table-header">
         
