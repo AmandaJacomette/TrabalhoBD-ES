@@ -384,6 +384,106 @@ h1 {
   position: relative;
 }
 
+.popup{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #0707073f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-inner{
+  position: relative;
+  padding: 32px;
+  width: 60%;
+  max-width: 640px;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-left: 240px;
+}
+
+.popup-inner .close-btn{
+  display: flex;
+  font-size: 12px;
+  height: 15px;
+  width: 70px;
+  margin: 10px;
+  float: right;
+  
+}
+
+.close-btn:hover {
+  background: #CF5D67;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0px 4px 10px #CF5D67;
+}
+
+.modalButton{
+  display: inline-block;
+  font-size: 12px;
+  height: 15px;
+  width: 70px;
+  margin: 10px;
+  float: right;
+}
+
+
+.modalButton:hover {
+  background: #CF5D67;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0px 4px 10px #CF5D67;
+}
+.input-modal input{
+  display: block;
+    width: 50%;
+    height: 100%;
+    border: none;
+    font-size: 17px;
+    border-bottom: 2px solid rgba(0,0,0, 0.12);
+    font-style: italic;
+    color: rgba(53, 53, 53, 0.473);
+    text-align: left;
+}
+
+.input-modal .modalLabel{
+  color: #CF5D67;
+  pointer-events: none;
+  bottom: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  padding: 10px;
+}
+
+.container-modal{
+  padding: 10px;
+  position: relative;
+  display: inline;
+  justify-content: center;
+}
+
+.container-modal .input-modal{
+  padding: 10px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.text-modal{
+  padding: 10px;
+  font-size: 22px;
+  font-weight: 500;
+  font-family: Monserrat;
+  background: #070707;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 @media screen and (min-width: 1460px){
   .mform{
     width: 80%;
@@ -413,7 +513,7 @@ h1 {
   }
 
   .table{
-    width:100%;
+    width:1000px;
   }
   
 }

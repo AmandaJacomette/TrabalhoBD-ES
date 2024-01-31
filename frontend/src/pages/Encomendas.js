@@ -7,7 +7,7 @@ import axios from 'axios';
 import '../components/style/style.css'
 import StoreContext from '../components/Store/Context';
 import logo from "../img/logo.png"
-import Popup from '../components/popuplogin';
+import Popup from '../components/Popup';
 
 function createRandomEnc(count = 5) {
     const encomendas = [];
@@ -33,6 +33,7 @@ function Encomendas({userData}){
     const navigate = useNavigate();
     const { setToken, token } = useContext(StoreContext);
     const [tableData, setTableData] = useState([]);
+    const [buttonPopup, setButtonPopup] = useState(false);
 
     const[formData, setEncomendas] = useState({
             id: 0,
@@ -120,7 +121,16 @@ function Encomendas({userData}){
           console.error('Erro ao enviar dados:', error);
         });*/
     };
+
+    const handleChangeStatus = () => {
+        setButtonPopup(true);
+    }
   
+    const handleSubmitModal = (event) => {
+      event.preventDefault();
+      console.log(formData.id);
+      console.log(formData.status);
+    }
 
     return (
       <div className="containerEnc">
@@ -189,11 +199,16 @@ function Encomendas({userData}){
         <div class = "text">Encomendas Feitas</div>
         <button className= "update-btn" onClick={handleCreateEnc}>Criar</button>
         <button className= "delete-btn" onClick={handleClearEnc}>Deletar</button>
+        <button className= "update-btn" onClick={handleChangeStatus}>Atualizar</button>
           <div className="mtable">
      
       <div class="table">
       <div class="table-header">
-          
+      <div class="header__item">
+          <a id="id" class="filter__link filter__link--number" >
+          ID
+          </a>
+          </div>
         <div class="header__item">
           <a id="nome" class="filter__link filter__link--number" >
            Nome Solicitante
@@ -230,6 +245,7 @@ function Encomendas({userData}){
             tableData.map((obj) => {
               return (
                 <div class="table-row">
+                  <div class="table-data">{obj.id}</div>
                   <div class="table-data">{obj.solicitante}</div>
                   <div class="table-data">{obj.fornecedorCNPJ}</div>
                   <div class="table-data">{obj.cdprod}</div>
@@ -247,7 +263,39 @@ function Encomendas({userData}){
 
         </div>
       </div>
-        
+        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+          <div className='container-modal'>
+            <div className="text-modal">Atualizar Encomenda</div>
+            <form onSubmit={handleSubmitModal}>
+              <div class="input-modal">
+              <label className='modalLabel' for="cdprod">
+                  ID
+                </label>
+                  <input 
+                        name="id" 
+                        className='dadosEncomenda' 
+                        value={formData.id}
+                        onChange={handleInputChange} required/>
+                  
+                </div>
+              <div class = "input-modal">
+              <label className='modalLabel' for="quantidade">
+                  Status
+                </label>
+                  <input 
+                        name="status" 
+                        className='dadosEncomenda' 
+                        value={formData.status}
+                        onChange={handleInputChange} required />
+          
+                   
+                </div>
+              <button className= "modalButton" 
+              type = "submit"
+             >Atualizar</button>
+              </form> 
+          </div>
+        </Popup>
       </div>
   );
 }
