@@ -31,7 +31,7 @@ function Formulario({navigation}){
 
     const handleSubmit = (event) => {
 
-      axios.post('http://127.0.0.1:5000/api/sendDados', formData)
+      axios.post('http://127.0.0.1:5000/api/login', formData)
       .then(response => {
         
         if(response.data.error != true){
