@@ -112,13 +112,13 @@ function Encomendas({userData}){
   const handleSubmit = (event) => {
       event.preventDefault();
       
-      /*axios.post('http://127.0.0.1:5000/api/sendDados', formData)
+      axios.post('http://127.0.0.1:5000/api/criaEncomenda', formData)
         .then(response => {
           console.log('Resposta do servidor:', response.data);
         })
         .catch(error => {
           console.error('Erro ao enviar dados:', error);
-        });*/
+        });
     };
   
 
