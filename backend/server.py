@@ -44,13 +44,9 @@ def inserir_db(sql):
     cur.close()
     return 1
   con.close()
-  
- 
-@app.route('/api/data', methods=['GET'])
-def get_data():
-    data = {'message': 'Hello from Python backend!'}
-    return jsonify(data)
 
+##################   ROTAS   ######################
+ 
 @app.route('/api/login', methods=['POST'])
 def send_data():
     data = request.json  # Os dados do formulário serão enviados como JSON
@@ -123,6 +119,15 @@ def update_encomenda():
     data = {'error': False}
     return data
 
+@app.route('/api/deletaEncomenda', methods=['POST'])
+def delete_encomenda():
+    data = request.json  # Os dados do formulário serão enviados como JSON
+    print("Dados recebidos:", data)
+    id = data['id']
+    encomenda = inserir_db('DELETE FROM ENCOMENDA WHERE idencomenda = ' + id)
+    data = {'error': False}
+    return data
+
 @app.route('/api/getEncomendas', methods=['GET'])
 def get_encomenda():
     encomenda = consultar_db('SELECT E.IDENCOMENDA, R.REPNOME, P.PRODNOME, E.DATAPEDIDO,'+
@@ -135,19 +140,6 @@ def get_encomenda():
     print("Dados banco:", df_bd)
     return df_bd
 
-# Route for seeing a data
-@app.route('/data')
-def get_time():
- 
-    # Returning an api for showing in  reactjs
-    return {
-        'Name':"geek", 
-        "Age":"22",
-        "Date":x, 
-        "programming":"python"
-        }
- 
-     
 # Running app
 if __name__ == '__main__':
     app.run(debug=True)

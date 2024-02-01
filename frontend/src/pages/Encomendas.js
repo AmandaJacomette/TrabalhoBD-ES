@@ -33,6 +33,7 @@ function Encomendas({userData}){
     const { setToken, token } = useContext(StoreContext);
     const [tableData, setTableData] = useState([]);
     const [buttonPopup, setButtonPopup] = useState(false);
+    const [buttonDeletePopup, setDeletePopup] = useState(false);
 
     const[formData, setEncomendas] = useState({
             id: 0,
@@ -111,6 +112,10 @@ function Encomendas({userData}){
     const handleChangeStatus = () => {
         setButtonPopup(true);
     }
+
+    const handleDelete = () => {
+      setDeletePopup(true);
+  }
   
     const handleSubmitModal = (event) => {
       event.preventDefault();
@@ -127,7 +132,25 @@ function Encomendas({userData}){
         .catch(error => {
           console.error('Erro ao enviar dados:', error);
         });
+    }
 
+    const handleSubmitDelete = (event) => {
+      event.preventDefault();
+      console.log(formData.id);
+      console.log(formData.status);
+
+      axios.post('http://127.0.0.1:5000/api/deletaEncomenda', formData)
+        .then(response => {
+          console.log('Resposta do servidor:', response.data);
+          setDeletePopup(false);
+          handleClearEnc()
+          handleCreateEnc(event)
+        })
+        .catch(error => {
+          console.error('Erro ao enviar dados:', error);
+        });
+
+        
     }
 
     return (
@@ -196,7 +219,7 @@ function Encomendas({userData}){
         <div className='encomendasFeitas'>
         <div class = "text">Encomendas Feitas</div>
         <button className= "update-btn" onClick={handleCreateEnc}>Recarregar...</button>
-        <button className= "delete-btn" onClick={handleClearEnc}>Deletar</button>
+        <button className= "delete-btn" onClick={handleDelete}>Deletar</button>
         <button className= "update-btn" onClick={handleChangeStatus}>Atualizar</button>
           <div className="mtable">
      
@@ -291,6 +314,28 @@ function Encomendas({userData}){
               </form> 
           </div>
         </Popup>
+        <Popup trigger={buttonDeletePopup} setTrigger={setDeletePopup}>
+          <div className='container-modal'>
+            <div className="text-modal">Deleta Encomenda</div>
+            <form onSubmit={handleSubmitDelete}>
+              <div class="input-modal">
+              <label className='modalLabel' for="cdprod">
+                  ID
+                </label>
+                  <input 
+                        name="id" 
+                        className='dadosEncomenda' 
+                        value={formData.id}
+                        onChange={handleInputChange} required/>
+                  
+                </div>
+              <button className= "modalButton" 
+              type = "submit"
+             >Excluir</button>
+              </form> 
+          </div>
+        </Popup>
+
       </div>
   );
 }
