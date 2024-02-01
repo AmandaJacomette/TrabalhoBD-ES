@@ -109,12 +109,30 @@ def create_encomenda():
     
     return data
 
+@app.route('/api/atualizaEncomenda', methods=['POST'])
+def update_encomenda():
+    data = request.json  # Os dados do formulário serão enviados como JSON
+    print("Dados recebidos:", data)
+    id = data['id']
+    status = data['status']
+    encomenda = inserir_db('UPDATE ENCOMENDA SET STATUS = \'' + status +'\' WHERE IDENCOMENDA = ' + id)
+    #df_bd = pd.DataFrame(encomenda, columns=['idencomenda', 'repnome', 'prodnome', 'datapedido', 'quantidade', 'valor', 'status'])
+    #df_bd.head()
+   #df_bd = df_bd.to_dict()
+    #print("Dados banco:", df_bd)
+    data = {'error': False}
+    return data
+
 @app.route('/api/getEncomendas', methods=['GET'])
 def get_encomenda():
-    encomenda = consultar_db('select * from public.encomenda')
-    df_bd = pd.DataFrame(encomenda, columns=['cdprod', 'datapedido', 'quantidade', 'valor', 'status', 'solicitante'])
+    encomenda = consultar_db('SELECT E.IDENCOMENDA, R.REPNOME, P.PRODNOME, E.DATAPEDIDO,'+
+                             ' E.QUANTIDADE, E.VALOR, E.STATUS'+
+                             ' FROM ENCOMENDA E, PRODUTO P, REPOSITOR R '+
+                             'WHERE E.SOLICITANTE = R.CPFREP AND E.CDPROD = P.CODBARRAS')
+    df_bd = pd.DataFrame(encomenda, columns=['idencomenda', 'repnome', 'prodnome', 'datapedido', 'quantidade', 'valor', 'status'])
     df_bd.head()
     df_bd = df_bd.to_dict()
+    print("Dados banco:", df_bd)
     return df_bd
 
 # Route for seeing a data

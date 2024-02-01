@@ -9,19 +9,18 @@ import StoreContext from '../components/Store/Context';
 import logo from "../img/logo.png"
 import Popup from '../components/Popup';
 
-function createRandomEnc(count = 5) {
+function createTableEnc(data) {
     const encomendas = [];
     
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < Object.keys(data.idencomenda).length; i++) {
       encomendas.push({
-        id: i + 325,
-        cdprod: '11198892341' + i,
-        datapedido: '24-01-2024',
-        quantidade: 5 + i,
-        valor: 123.50 + (i/2),
-        status: 'Encaminhado',
-        solicitante: 'Funcionário 1',
-        fornecedorCNPJ: '11.111.111/0001-1' + i
+        id: data['idencomenda'][i],
+        repnome: data['repnome'][i],
+        prodnome: data['prodnome'][i],
+        datapedido: data['datapedido'][i],
+        quantidade: data['quantidade'][i],
+        valor: data['valor'][i],
+        status: data['status'][i],
       });
     }
   
@@ -37,13 +36,13 @@ function Encomendas({userData}){
 
     const[formData, setEncomendas] = useState({
             id: 0,
-            cdprod: 0,
+            repnome: 'Funcionário 1',
+            prodnome: 'Funcionário 1',
             datapedido: '24-01-2024',
             quantidade: 0,
             valor: 0,
-            status: ' ',
-            solicitante: 'Funcionário 1',
-            fornecedorCNPJ: '11.111.111/0001-11'
+            status: ' '
+            
         
     });
 
@@ -73,9 +72,20 @@ function Encomendas({userData}){
         setTableData([]);
       }
 
-    const handleCreateEnc = () => {
-        const newUsers = createRandomEnc()
-        setTableData([...tableData, ...newUsers])
+    const handleCreateEnc = (event) => {
+
+      event.preventDefault();
+      
+      axios.get('http://127.0.0.1:5000/api/getEncomendas')
+        .then(response => {
+          console.log('Resposta do servidor:', response.data);
+          const table = createTableEnc(response.data)
+          setTableData([...tableData, ...table])
+        })
+        .catch(error => {
+          console.error('Erro ao enviar dados:', error);
+        });
+        
     }
     
     const handleInputChange = (event) => {
@@ -85,30 +95,6 @@ function Encomendas({userData}){
           [name]: value,
         }));
     };
-    /*
-    function createEncomenda(input){
-      var jqXHR = $.ajax({
-          type: "POST",
-          url: "/api/createEncomenda",
-          async: false,
-          data: { data: input}
-      });
-  
-      return jqXHR.responseText;
-      // return jqXHR;
-  }
-
-  function returnEncomendas(input){
-    var data = $.ajax({
-        type: "POST",
-        url: "/api/returnEncomenda",
-        async: false,
-        data: { data: input}
-    });
-
-    sendEncomendas(data);
-  }
-  */
 
   const handleSubmit = (event) => {
       event.preventDefault();
@@ -130,6 +116,18 @@ function Encomendas({userData}){
       event.preventDefault();
       console.log(formData.id);
       console.log(formData.status);
+
+      axios.post('http://127.0.0.1:5000/api/atualizaEncomenda', formData)
+        .then(response => {
+          console.log('Resposta do servidor:', response.data);
+          setButtonPopup(false);
+          handleClearEnc()
+          handleCreateEnc(event)
+        })
+        .catch(error => {
+          console.error('Erro ao enviar dados:', error);
+        });
+
     }
 
     return (
@@ -197,7 +195,7 @@ function Encomendas({userData}){
         </form>
         <div className='encomendasFeitas'>
         <div class = "text">Encomendas Feitas</div>
-        <button className= "update-btn" onClick={handleCreateEnc}>Criar</button>
+        <button className= "update-btn" onClick={handleCreateEnc}>Recarregar...</button>
         <button className= "delete-btn" onClick={handleClearEnc}>Deletar</button>
         <button className= "update-btn" onClick={handleChangeStatus}>Atualizar</button>
           <div className="mtable">
@@ -210,17 +208,13 @@ function Encomendas({userData}){
           </a>
           </div>
         <div class="header__item">
-          <a id="nome" class="filter__link filter__link--number" >
+          <a id="repnome" class="filter__link filter__link--number" >
            Nome Solicitante
           </a>
           </div>
           <div class="header__item">
-          <a id="fornecedorCNPJ" class="filter__link filter__link--number">
-            Fornecedor</a>
-          </div>
-          <div class="header__item">
-          <a id="cdprod" class="filter__link filter__link--number">
-            Código do Produto</a>
+          <a id="prodnome" class="filter__link filter__link--number">
+            Produto</a>
           </div>
           <div class="header__item">
           <a id="quantidade" class="filter__link filter__link--number">
@@ -231,13 +225,14 @@ function Encomendas({userData}){
            Valor Total</a>
           </div>
           <div class="header__item">
-          <a id="data" class="filter__link filter__link--number">
-            Data do Pedido</a>
-          </div>
-          <div class="header__item">
           <a id="status" class="filter__link filter__link--number">
             Status</a>
           </div>
+          <div class="header__item">
+          <a id="data" class="filter__link filter__link--number">
+            Data do Pedido</a>
+          </div>
+          
 
         </div>
         <div class="table-content">
@@ -246,13 +241,13 @@ function Encomendas({userData}){
               return (
                 <div class="table-row">
                   <div class="table-data">{obj.id}</div>
-                  <div class="table-data">{obj.solicitante}</div>
-                  <div class="table-data">{obj.fornecedorCNPJ}</div>
-                  <div class="table-data">{obj.cdprod}</div>
+                  <div class="table-data">{obj.repnome}</div>
+                  <div class="table-data">{obj.prodnome}</div>
                   <div class="table-data">{obj.quantidade}</div>
                   <div class="table-data">{obj.valor}</div>
-                  <div class="table-data">{obj.datapedido}</div>
                   <div class="table-data">{obj.status}</div>
+                  <div class="table-data">{obj.datapedido}</div>
+                  
                 </div>
               );
             })
