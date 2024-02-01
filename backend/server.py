@@ -140,6 +140,17 @@ def get_encomenda():
     print("Dados banco:", df_bd)
     return df_bd
 
+@app.route('/api/getEstoque', methods=['GET'])
+def get_estoque():
+    estoque = consultar_db('SELECT P.PRODNOME, E.QUANTATUALPROD, E.SECAO ' +
+                             'FROM ESTOQUE E, PRODUTO P '+
+                             'WHERE E.CDPROD = P.CODBARRAS')
+    df_bd = pd.DataFrame(estoque, columns=['prodnome', 'quantatualprod', 'secao'])
+    df_bd.head()
+    df_bd = df_bd.to_dict()
+    print("Dados banco:", df_bd)
+    return df_bd
+
 # Running app
 if __name__ == '__main__':
     app.run(debug=True)
