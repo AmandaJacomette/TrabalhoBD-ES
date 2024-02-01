@@ -228,41 +228,6 @@ const handleReporPrateleira = () => {
           </div>
         </div>
 
-        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-          <div className='container-modal'>
-            <div className="text-modal">Repor Estoque</div>
-            <form onSubmit={handleSubmitModal}>
-              <div class="input-modal">
-                <label className='modalLabel' for="cdprod">
-                  ID
-                </label>
-                <input 
-                  name="id" 
-                  className='dadosEncomenda' 
-                  value={formData.id}
-                  onChange={handleInputChange} required/>
-
-              </div>
-              <div class = "input-modal">
-                <label className='modalLabel' for="quantidade">
-                  Status
-                </label>
-                <input 
-                  name="quantidade" 
-                  className='dadosEncomenda' 
-                  value={formData.quantidade}
-                  onChange={handleInputChange} required />
-    
-                   
-              </div>
-              <button className= "modalButton" 
-                      type = "submit" >
-                Atualizar
-              </button>
-            </form> 
-          </div>
-        </Popup>
-
         <div className="mform">
           <div className = "text">Prateleiras</div>
           <button className= "update-btn" onClick={handleCreatePrats}>Criar</button>
@@ -309,6 +274,41 @@ const handleReporPrateleira = () => {
             </div>
           </div>
         </div>
+
+        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+          <div className='container-modal'>
+            <div className="text-modal">Repor Estoque</div>
+            <form onSubmit={handleSubmitModal}>
+              <div class="input-modal">
+                <label className='modalLabel' for="cdprod">
+                  ID
+                </label>
+                <input 
+                  name="id" 
+                  className='dadosEncomenda' 
+                  value={formData.id}
+                  onChange={handleInputChange} required/>
+
+              </div>
+              <div class = "input-modal">
+                <label className='modalLabel' for="quantidade">
+                  Status
+                </label>
+                <input 
+                  name="quantidade" 
+                  className='dadosEncomenda' 
+                  value={formData.quantidade}
+                  onChange={handleInputChange} required />
+    
+                   
+              </div>
+              <button className= "modalButton" 
+                      type = "submit" >
+                Atualizar
+              </button>
+            </form> 
+          </div>
+        </Popup>
       </div>
   );
 }
