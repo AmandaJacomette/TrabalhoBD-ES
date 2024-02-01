@@ -15,9 +15,9 @@ CORS(app)
 # Função para criar conexão no banco
 def conecta_db():
   con = psycopg2.connect(host='localhost', 
-                         database='superManeger',
+                         database='supermercadoBD',
                          user='postgres', 
-                         password='147258')
+                         password='Valamiel@20')
   return con
 
 # Função para consultas no banco
@@ -151,6 +151,42 @@ def get_estoque():
     print("Dados banco:", df_bd)
     return df_bd
 
+@app.route('/api/criaChamado', methods=['POST'])
+def create_chamado():
+    chamado = request.json  # Os dados do formulário serão enviados como JSON
+    print("Dados recebidos:", chamado)
+    cpffuncionario = '12345678910'
+    nome = chamado['nome']
+    departamento = chamado['departamento']
+    titulo = chamado['titulo']
+    assunto = chamado['assunto']
+    inserir_db('INSERT INTO RECURSOSHUMANOS(cpffuncionario, nomefuncionario,'+
+               ' departamento, titulo, assunto) '+
+                ' VALUES ( \''+ cpffuncionario +'\', \'' + nome + '\', '+ departamento +', \'' + titulo + '\', \'' + assunto + '\')')
+    
+    return chamado
+
+@app.route('/api/getChamado', methods=['GET'])
+def get_chamado():
+    estoque = consultar_db('SELECT * FROM RECURSOSHUMANOS')
+    df_bd = pd.DataFrame(estoque, columns=['idchamado', 'cpffuncionario', 'nomefuncionario', 'departamento', 'titulo', 'assunto'])
+    df_bd.head()
+    df_bd = df_bd.to_dict()
+    print("Dados banco:", df_bd)
+    return df_bd
+
+
+@app.route('/api/deletaChamado', methods=['POST'])
+def delete_chamado():
+    data = request.json  # Os dados do formulário serão enviados como JSON
+    print("Dados recebidos:", data)
+    id = data['id']
+    chamado = inserir_db('DELETE FROM RECURSOSHUMANOS WHERE idencomenda = ' + id)
+    data = {'error': False}
+    return data
+
 # Running app
 if __name__ == '__main__':
     app.run(debug=True)
+
+

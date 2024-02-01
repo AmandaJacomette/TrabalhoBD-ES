@@ -10,19 +10,20 @@ import Popup from '../components/popuplogin';
 import '../components/style/style.css'
 import StoreContext from '../components/Store/Context';
 
-function createRandomChamados(count = 5) {
+function createChamados(data) {
   const chamados = [];
-  
-  for (let i = 0; i < count; i++) {
-    chamados.push({
-      cpf: '200' + i,
-      nome: 'Funcionario 1',
-      departamento: '2',
-      titulo: 'Chamado Teste ' + i,
-      assunto: 'Assunto do Chamado ' + i,
-      status: 'Encaminhado'
-    });
+    
+    for (let i = 0; i < Object.keys(data.idchamado).length; i++) {
+      chamados.push({
+        id: data['idchamado'][i],
+        nome: data['nomefuncionario'][i],
+        departamento: data['departamento'][i],
+        titulo: data['titulo'][i],
+        assunto: data['assunto'][i],
+      });
   }
+
+  
 
   return chamados;
 }
@@ -32,14 +33,15 @@ function RecursosHumanos({userData}){
     const navigate = useNavigate();
     const [tableData, setTableData] = useState([]);
     const { setToken, token } = useContext(StoreContext);
+    const [buttonPopup, setButtonPopup] = useState(false);
+    const [buttonDeletePopup, setDeletePopup] = useState(false);
     
     const[formData, setChamados] = useState({
-            cpf: '2001',
+            id: '2001',
             nome: 'Funcionario',
             departamento: '2',
             titulo: 'Chamado Teste',
             assunto: 'Assunto do Chamado',
-            status: ' '
     });
     
     const handleInputChange = (event) => {
@@ -69,39 +71,51 @@ function RecursosHumanos({userData}){
       }
     };
 
-    /*
-    function sendChamado(input){
-      var jqXHR = $.ajax({
-          type: "POST",
-          url: "/api/sendChamado",
-          async: false,
-          data: { data: input}
-      });
-  
-      return jqXHR.responseText;
-      // return jqXHR;
-  }
-  */
-
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    /*axios.post('http://127.0.0.1:5000/api/sendDados', formData)
+    axios.post('http://127.0.0.1:5000/api/criaChamado', formData)
       .then(response => {
         console.log('Resposta do servidor:', response.data);
       })
       .catch(error => {
         console.error('Erro ao enviar dados:', error);
-      });*/
+      });
   };
 
   const handleClearChamados = () => {
-    setTableData([]);
+    setDeletePopup(true);
   }
 
-const handleCreateChamados = () => {
-    const newUsers = createRandomChamados()
-    setTableData([...tableData, ...newUsers])
+  const handleSubmitDelete = (event) => {
+    event.preventDefault();
+    console.log(formData.id);
+
+    axios.post('http://127.0.0.1:5000/api/deletaChamado', formData)
+      .then(response => {
+        console.log('Resposta do servidor:', response.data);
+        setDeletePopup(false);
+        handleCreateChamados(event)
+      })
+      .catch(error => {
+        console.error('Erro ao enviar dados:', error);
+      });
+
+      
+  }
+
+const handleCreateChamados = (event) => {
+  event.preventDefault();
+      
+  axios.get('http://127.0.0.1:5000/api/getChamado')
+    .then(response => {
+      console.log('Resposta do servidor:', response.data);
+      const table = createChamados(response.data)
+      setTableData([...tableData, ...table])
+    })
+    .catch(error => {
+      console.error('Erro ao enviar dados:', error);
+    });
 }
 
 
@@ -183,14 +197,19 @@ const handleCreateChamados = () => {
         </form>
         <div className='Chamados'>
         <div class = "text">Chamados</div>
-      <button className= "update-btn" onClick={handleCreateChamados}>Criar</button>
+      <button className= "update-btn" onClick={handleCreateChamados}>Recarregar</button>
       <button className= "delete-btn" onClick={handleClearChamados}>Deletar</button>
    
         <div className="mtable">
       <div class="table">
       <div class="table-header">
           
-        <div class="header__item">
+          <div class="header__item">
+          <a id="id" class="filter__link filter__link--number" >
+           Id
+          </a>
+          </div>
+          <div class="header__item">
           <a id="nome" class="filter__link filter__link--number" >
            Nome
           </a>
@@ -207,10 +226,7 @@ const handleCreateChamados = () => {
           <a id="assunto" class="filter__link filter__link--number">
             Assunto</a>
           </div>
-          <div class="header__item">
-          <a id="status" class="filter__link filter__link--number">
-           Status</a>
-          </div>
+          
 
 
         </div>
@@ -219,12 +235,11 @@ const handleCreateChamados = () => {
             tableData.map((obj) => {
               return (
                 <div class="table-row">
+                  <div class="table-data">{obj.id}</div>
                   <div class="table-data">{obj.nome}</div>
                   <div class="table-data">{obj.departamento}</div>
                   <div class="table-data">{obj.titulo}</div>
-                  <div class="table-data">{obj.quantidade}</div>
                   <div class="table-data">{obj.assunto}</div>
-                  <div class="table-data">{obj.status}</div>
                 </div>
               );
             })
@@ -234,6 +249,27 @@ const handleCreateChamados = () => {
         </div>
 
         </div>
+        <Popup trigger={buttonDeletePopup} setTrigger={setDeletePopup}>
+          <div className='container-modal'>
+            <div className="text-modal">Deleta Chamado</div>
+            <form onSubmit={handleSubmitDelete}>
+              <div class="input-modal">
+              <label className='modalLabel' for="cdprod">
+                  ID
+                </label>
+                  <input 
+                        name="id" 
+                        className='dadosEncomenda' 
+                        value={formData.id}
+                        onChange={handleInputChange} required/>
+                  
+                </div>
+              <button className= "modalButton" 
+              type = "submit"
+             >Excluir</button>
+              </form> 
+          </div>
+        </Popup>
       </div>
         
         
