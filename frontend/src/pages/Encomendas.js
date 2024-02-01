@@ -49,6 +49,7 @@ function Encomendas({userData}){
 
     useEffect(() => {
         fetchData();
+        console.log(token);
       }, []);
     
       const fetchData = async () => {
@@ -159,7 +160,8 @@ function Encomendas({userData}){
         <div class = "text">Encomendas</div>
         <form onSubmit={handleSubmit}>
            
-            <div className='form-all'>
+          { token == 2 ? 
+          <div className='form-all'>
               <div class = "text">
                 Criar Encomenda
               </div>
@@ -214,7 +216,7 @@ function Encomendas({userData}){
                 </div>
                 
                 
-            </div>
+            </div> : ""}
         </form>
         <div className='encomendasFeitas'>
         <div class = "text">Encomendas Feitas</div>

@@ -68,7 +68,7 @@ const handleCreateInfo = () => {
 
     return (
       <div className="mform">
-         <div className = "text">Relatório</div>
+         <div className = "text">Jornada de Trabalho</div>
   <button className= "update-btn" onClick={handleCreateInfo}>Gerar</button>
   <button className= "delete-btn" onClick={handleClearInfo}>Deletar</button>
       <div className="mtable">

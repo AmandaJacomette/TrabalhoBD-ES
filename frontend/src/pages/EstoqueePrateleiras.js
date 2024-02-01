@@ -187,7 +187,10 @@ const handleReporPrateleira = () => {
           <div className = "text">Estoque</div>
           <button className= "update-btn" onClick={handleCreateEstoque}>Atualizar...</button>
           <button className= "delete-btn" onClick={handleClearEstoque}>Deletar</button>
-          <button className= "update-btn" onClick={handleReporEstoque}>Repor</button>
+          { token == 2 ?
+            <button className= "update-btn" onClick={handleReporEstoque}>Repor</button>
+          : ""}
+          
           <div className="mtable">
             <div class="table">
               <div class="table-header">
@@ -232,7 +235,10 @@ const handleReporPrateleira = () => {
           <div className = "text">Prateleiras</div>
           <button className= "update-btn" onClick={handleCreatePrats}>Criar</button>
           <button className= "delete-btn" onClick={handleClearPrats}>Deletar</button>
-          <button className= "update-btn" onClick={handleReporPrateleira}>Repor</button>
+          { token == 2 ?
+            <button className= "update-btn" onClick={handleReporPrateleira}>Repor</button>
+          : ""}
+          
           <div className="mtable">
             <div class="table">
               <div class="table-header">
