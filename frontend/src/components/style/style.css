@@ -249,7 +249,7 @@ h1 {
 }
 
 .mtable{
-  display: inline-block;
+  display: flex;
   width: 80%;
   height: 100%;
   background: #fff;
@@ -302,7 +302,7 @@ h1 {
 
 .header__item {
 	
-  padding: 10px;
+  padding: 5px;
   font: "Nunito Sans", sans-serif; 
 }
 
@@ -527,6 +527,14 @@ h1 {
   .mtable {
     width: 70%;
    
+  }
+
+  .table{
+    width:150%;
+  }
+
+  .mform .table {
+    width:100%;
   }
   
 }
