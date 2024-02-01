@@ -38,7 +38,7 @@ function Formulario({navigation}){
           if(response.data.option == 1){
             navigate("EntrarCaixa",  { replace: false });
           } else if(response.data.option == 2){
-            setToken({token: 1});
+            setToken({token: 2});
             navigate("Home",  { replace: false });
           }
           
