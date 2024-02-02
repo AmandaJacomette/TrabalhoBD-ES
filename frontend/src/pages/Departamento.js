@@ -8,18 +8,17 @@ import Popup from '../components/Popup';
 import axios from 'axios';
 
 
-function createRandomUsers(count = 5) {
+function createRandomUsers(data) {
   const users = [];
   
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < Object.keys(data.cpf).length; i++) {
     users.push({
-      userId: i + 120,
-      cpf: "123456789 -0" + i,
-      name: "Funcionario " + i,
-      funcao : "Operador",
-      salario: 1417.25,
-      dataInicio: '01-01-2024',
-      horaIntervalo: '12:30'
+      cpf: data['cpf'][i],
+      nome: data['nomefuncionario'][i],
+      funcao : data['Operador'][i],
+      salario: data['salario'][i],
+      dataInicio: data['datainicio'][i],
+      horaIntervalo: data['horaintervalo'][i],
     });
   }
 
@@ -34,8 +33,9 @@ function Departamento({userData}){
   const { setToken, token } = useContext(StoreContext);
 
   const[formData, setFunc] = useState({
-    nome: '',
     cpf: '',
+    nome: '',
+    funcao: '',
     senha: '',
     salario: 0,
     intervalo: ''
@@ -81,15 +81,14 @@ function Departamento({userData}){
 
   const handleSubmitModal = (event) => {
     event.preventDefault();
-    console.log(formData.id);
-    console.log(formData.status);
+    console.log(formData.cpf);
 
     axios.post('http://127.0.0.1:5000/api/criaFuncionario', formData)
       .then(response => {
         console.log('Resposta do servidor:', response.data);
         setButtonPopup(false);
-        //handleClearEnc()
-        //handleCreateEnc(event)
+        handleClearUsers()
+        handleCreateUsers(event)
       })
       .catch(error => {
         console.error('Erro ao enviar dados:', error);
@@ -98,15 +97,14 @@ function Departamento({userData}){
 
   const handleSubmitDelete = (event) => {
     event.preventDefault();
-    console.log(formData.id);
-    console.log(formData.status);
+    console.log(formData.cpf);
 
-    axios.post('http://127.0.0.1:5000/api/deletaEncomenda', formData)
+    axios.post('http://127.0.0.1:5000/api/deletaFuncionario', formData)
       .then(response => {
         console.log('Resposta do servidor:', response.data);
         setDeletePopup(false);
-        //handleClearEnc()
-        //handleCreateEnc(event)
+        handleClearUsers()
+        handleCreateUsers(event)
       })
       .catch(error => {
         console.error('Erro ao enviar dados:', error);
@@ -120,11 +118,11 @@ function Departamento({userData}){
     event.preventDefault();
     
     
-    axios.get('http://127.0.0.1:5000/api/getEncomendas')
+    axios.get('http://127.0.0.1:5000/api/getFuncionario')
       .then(response => {
         console.log('Resposta do servidor:', response.data);          
-        //const table = createTableEnc(response.data)
-        //setTableData([...table])
+        const table = createRandomUsers(response.data)
+        setTableData([...table])
       })
       .catch(error => {
         console.error('Erro ao enviar dados:', error);
@@ -196,7 +194,7 @@ function Departamento({userData}){
                 </label>
                 <input 
                       name="nome" 
-                      className='dadosEncomenda' 
+                      className='dadosUsers' 
                       value={formData.nome}
                       onChange={handleInputChange} required/>
               </div>
@@ -207,8 +205,19 @@ function Departamento({userData}){
                 </label>
                 <input 
                       name="cpf" 
-                      className='dadosEncomenda' 
+                      className='dadosUsers' 
                       value={formData.cpf}
+                      onChange={handleInputChange} required />
+              </div>
+
+              <div class = "input-modal">
+                <label className='modalLabel' for="quantidade">
+                  Função
+                </label>
+                <input 
+                      name="funcao" 
+                      className='dadosUsers' 
+                      value={formData.funcao}
                       onChange={handleInputChange} required />
               </div>
 
@@ -218,7 +227,7 @@ function Departamento({userData}){
                 </label>
                 <input 
                       name="senha" 
-                      className='dadosEncomenda' 
+                      className='dadosUsers' 
                       value={formData.senha}
                       onChange={handleInputChange} required />
               </div>
@@ -229,7 +238,7 @@ function Departamento({userData}){
                 </label>
                 <input 
                       name="salario" 
-                      className='dadosEncomenda' 
+                      className='dadosUsers' 
                       value={formData.salario}
                       onChange={handleInputChange} required />
               </div>
@@ -240,7 +249,18 @@ function Departamento({userData}){
                 </label>
                 <input 
                       name="intervalo" 
-                      className='dadosEncomenda' 
+                      className='dadosUsers' 
+                      value={formData.intervalo}
+                      onChange={handleInputChange} required />
+              </div>
+
+              <div class = "input-modal">
+                <label className='modalLabel' for="quantidade">
+                  Setor (Repositor)
+                </label>
+                <input 
+                      name="setor" 
+                      className='dadosUsers' 
                       value={formData.intervalo}
                       onChange={handleInputChange} required />
               </div>
@@ -256,13 +276,23 @@ function Departamento({userData}){
           <div className='container-modal'>
             <div className="text-modal">Deleta Encomenda</div>
             <form onSubmit={handleSubmitDelete}>
+            <div class = "input-modal">
+                <label className='modalLabel' for="quantidade">
+                  Função
+                </label>
+                <input 
+                      name="funcao" 
+                      className='dadosUsers' 
+                      value={formData.funcao}
+                      onChange={handleInputChange} required />
+              </div>
               <div class="input-modal">
               <label className='modalLabel' for="cdprod">
-                  ID
+                  CPF
                 </label>
                   <input 
-                        name="id" 
-                        className='dadosEncomenda' 
+                        name="cpf" 
+                        className='dadosUsers' 
                         value={formData.id}
                         onChange={handleInputChange} required/>
                   

@@ -19,9 +19,9 @@ def conecta_db():
   #                       user='postgres', 
   #                       password='Valamiel@20')
   con = psycopg2.connect(host='localhost', 
-                         database='superManeger',
+                         database='supermercadoBD',
                          user='postgres', 
-                         password='147258')
+                         password='Valamiel@20')
   return con
 
 # Função para consultas no banco
@@ -229,6 +229,84 @@ def delete_chamado():
     chamado = inserir_db('DELETE FROM RECURSOSHUMANOS WHERE idencomenda = ' + id)
     data = {'error': False}
     return data
+
+
+@app.route('/api/getFuncionario', methods=['GET'])
+def get_funcionario():
+    operador = consultar_db('SELECT O.CPFOP, O.OPNOME, O.SALARIOOP, O.DATAINIOP, O.HORAINTER FROM OPERADOR O')
+    repositor = consultar_db('SELECT R.CPFREP, R.REPNOME, R.SALARIOREP, R.DATAINIREP FROM REPOSITOR R')
+    df_bd1 = pd.DataFrame(operador, columns=['cpfop', 'opnome', 'salarioop', 'datainiop', 'horainter'])
+    df_bd2 = pd.DataFrame(repositor, columns=['cpfrep', 'repnome', 'salariorep', 'datainirep'])
+    df_bd1.head()
+    df_bd2.head()
+    dict_funcionarios = dict()
+    for operador in df_bd1:
+        cpf: operador['cpfop']
+        nome: operador['nomeop']
+        funcao : operador['Operador']
+        salario: operador['salarioop']
+        dataInicio: operador['datainicio']
+        horaIntervalo: operador['horaintervalo']
+
+    for repositor in df_bd2:
+        cpf: repositor['cpfrep']
+        nome: repositor['nomerep']
+        funcao : repositor['Repositor']
+        salario: repositor['salariorep']
+        dataInicio: repositor['datainicio']
+        horaIntervalo: repositor['horaintervalo']
+
+
+    df_bd1['funcao'] = 'Operador'
+    df_bd2['funcao'] = 'Repositor'
+    df_bd2['horainter'] = '12:15'
+    df_bd1 = df_bd1.to_dict()
+    df_bd2 = df_bd2.to_dict()
+    df_bd1.update(df_bd2)
+    print("Dados banco:", df_bd1)
+    return df_bd1
+
+@app.route('/api/criaFuncionario', methods=['POST'])
+def create_funcionario():
+    funcionario = request.json  # Os dados do formulário serão enviados como JSON
+    print("Dados recebidos:", funcionario)
+    if(funcionario['funcao'] == 'Operador'):
+        cpf = funcionario['cpf']
+        nome = funcionario['nome']
+        ##funcao = funcionario['funcao']
+        senha = funcionario['senha']
+        salario = funcionario['salario']
+        ##datainiop = funcionario['datainiop']
+        horainter =funcionario['intervalo']
+        inserir_db('INSERT INTO OPERADOR(senhaop, opnome, cpfop, datainiop, salarioop, horainter) '+
+                ' VALUES ( ' + senha + ', \'' + nome + '\',  \''+ cpf +'\',\'' + str(datahj) + '\', ' + salario + ',  \'' + horainter + '\')')
+    if(funcionario['funcao'] == 'Repositor'):
+        cpf = funcionario['cpf']
+        nome = funcionario['nome']
+        ##funcao = funcionario['funcao']
+        senha = funcionario['senha']
+        salario = funcionario['salario']
+        setor = funcionario['setor']
+        ##datainirep = funcionario['datainirep']
+        ##horainter =funcionario['horainter']
+        inserir_db('INSERT INTO OPERADOR( senharep, repnome, cpfrep, datainirep, salariorep, setor) '+
+                ' VALUES ( ' + senha + ', \'' + nome + '\', \''+ cpf +'\', \'' + str(datahj) + '\', ' + salario + ', \'' + setor+ '\')')
+
+    return funcionario
+
+@app.route('/api/deletaFuncionario', methods=['POST'])
+def delete_funcionario():
+    funcionario = request.json  # Os dados do formulário serão enviados como JSON
+    print("Dados recebidos:", funcionario)
+    if(funcionario['funcao'] == 'Operador'):
+        cpfop = funcionario['cpf']
+        funcionario = inserir_db('DELETE FROM OPERADOR WHERE cpfop = ' + cpfop)
+
+    if(funcionario['funcao'] == 'Repositor'):
+        cpfrep = funcionario['cpf']
+        funcionario = inserir_db('DELETE FROM REPOSITOR WHERE cpfrep = ' + cpfrep)
+    funcionario = {'error': False}
+    return funcionario
 
 # Running app
 if __name__ == '__main__':

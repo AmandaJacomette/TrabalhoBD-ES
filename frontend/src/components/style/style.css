@@ -444,7 +444,7 @@ h1 {
     width: 50%;
     height: 100%;
     border: none;
-    font-size: 17px;
+    font-size: 15px;
     border-bottom: 2px solid rgba(0,0,0, 0.12);
     font-style: italic;
     color: rgba(53, 53, 53, 0.473);
@@ -455,7 +455,7 @@ h1 {
   color: #CF5D67;
   pointer-events: none;
   bottom: 10px;
-  font-size: 16px;
+  font-size: 18px;
   transition: all 0.3s ease;
   padding: 10px;
 }
@@ -463,8 +463,9 @@ h1 {
 .container-modal{
   padding: 10px;
   position: relative;
-  display: inline;
+  display: flex;
   justify-content: center;
+  
 }
 
 .container-modal .input-modal{
