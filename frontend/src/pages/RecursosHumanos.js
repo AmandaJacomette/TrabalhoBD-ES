@@ -195,81 +195,57 @@ const handleCreateChamados = (event) => {
                 
             </div>
         </form>
+
         <div className='Chamados'>
-        <div class = "text">Chamados</div>
-      <button className= "update-btn" onClick={handleCreateChamados}>Recarregar</button>
-      <button className= "delete-btn" onClick={handleClearChamados}>Deletar</button>
+          <div class = "text">Chamados</div>
+            <button className= "update-btn" onClick={handleCreateChamados}>Recarregar</button>
    
-        <div className="mtable">
-      <div class="table">
-      <div class="table-header">
-          
-          <div class="header__item">
-          <a id="id" class="filter__link filter__link--number" >
-           Id
-          </a>
-          </div>
-          <div class="header__item">
-          <a id="nome" class="filter__link filter__link--number" >
-           Nome
-          </a>
-          </div>
-          <div class="header__item">
-          <a id="departamento" class="filter__link filter__link--number">
-            Departamento</a>
-          </div>
-          <div class="header__item">
-          <a id="titulo" class="filter__link filter__link--number">
-            Titulo</a>
-          </div>
-          <div class="header__item">
-          <a id="assunto" class="filter__link filter__link--number">
-            Assunto</a>
-          </div>
-          
+            <div className="mtable">
+              <div class="table">
+                <div class="table-header">
 
+                  <div class="header__item">
+                  <a id="id" class="filter__link filter__link--number" >
+                   Id
+                  </a>
+                  </div>
+                  <div class="header__item">
+                  <a id="nome" class="filter__link filter__link--number" >
+                   Nome
+                  </a>
+                  </div>
+                  <div class="header__item">
+                  <a id="departamento" class="filter__link filter__link--number">
+                    Departamento</a>
+                  </div>
+                  <div class="header__item">
+                  <a id="titulo" class="filter__link filter__link--number">
+                    Titulo</a>
+                  </div>
+                  <div class="header__item">
+                  <a id="assunto" class="filter__link filter__link--number">
+                    Assunto</a>
+                  </div>
 
-        </div>
-        <div class="table-content">
-          {
-            tableData.map((obj) => {
-              return (
-                <div class="table-row">
-                  <div class="table-data">{obj.id}</div>
-                  <div class="table-data">{obj.nome}</div>
-                  <div class="table-data">{obj.departamento}</div>
-                  <div class="table-data">{obj.titulo}</div>
-                  <div class="table-data">{obj.assunto}</div>
                 </div>
-              );
-            })
-          }
-        </div>
-      </div>
-        </div>
-
-        </div>
-        <Popup trigger={buttonDeletePopup} setTrigger={setDeletePopup}>
-          <div className='container-modal'>
-            <div className="text-modal">Deleta Chamado</div>
-            <form onSubmit={handleSubmitDelete}>
-              <div class="input-modal">
-              <label className='modalLabel' for="cdprod">
-                  ID
-                </label>
-                  <input 
-                        name="id" 
-                        className='dadosEncomenda' 
-                        value={formData.id}
-                        onChange={handleInputChange} required/>
-                  
+                <div class="table-content">
+                  {
+                    tableData.map((obj) => {
+                      return (
+                        <div class="table-row">
+                          <div class="table-data">{obj.id}</div>
+                          <div class="table-data">{obj.nome}</div>
+                          <div class="table-data">{obj.departamento}</div>
+                          <div class="table-data">{obj.titulo}</div>
+                          <div class="table-data">{obj.assunto}</div>
+                        </div>
+                      );
+                    })
+                  }
                 </div>
-              <button className= "modalButton" 
-              type = "submit"
-             >Excluir</button>
-              </form> 
-          </div>
-        </Popup>
+              </div>
+            </div>
+        </div>
       </div>
         
         

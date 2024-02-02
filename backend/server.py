@@ -14,10 +14,14 @@ CORS(app)
 
 # Função para criar conexão no banco
 def conecta_db():
+  #con = psycopg2.connect(host='localhost', 
+  #                       database='supermercadoBD',
+  #                       user='postgres', 
+  #                       password='Valamiel@20')
   con = psycopg2.connect(host='localhost', 
-                         database='supermercadoBD',
+                         database='superManeger',
                          user='postgres', 
-                         password='Valamiel@20')
+                         password='147258')
   return con
 
 # Função para consultas no banco
