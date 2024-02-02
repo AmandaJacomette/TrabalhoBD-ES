@@ -11,15 +11,8 @@ import axios from 'axios';
 function createRandomUsers(data) {
   const users = [];
   
-  for (let i = 0; i < Object.keys(data.cpf).length; i++) {
-    users.push({
-      cpf: data['cpf'][i],
-      nome: data['nomefuncionario'][i],
-      funcao : data['Operador'][i],
-      salario: data['salario'][i],
-      dataInicio: data['datainicio'][i],
-      horaIntervalo: data['horaintervalo'][i],
-    });
+  for (let i = 0; i < Object.keys(data).length; i++) {
+    users.push(data[i]);
   }
 
   return users;
@@ -55,12 +48,6 @@ function Departamento({userData}){
 
   const fetchData = async () => {
     try {
-      /*
-      const response = await fetch("https://cities-qd9i.onrender.com/agents");
-      const agents = await response.json();
-      
-      setTableData(agents);
-      */
      console.log(tableData);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -87,8 +74,8 @@ function Departamento({userData}){
       .then(response => {
         console.log('Resposta do servidor:', response.data);
         setButtonPopup(false);
-        handleClearUsers()
-        handleCreateUsers(event)
+        handleGetUsers(event)
+
       })
       .catch(error => {
         console.error('Erro ao enviar dados:', error);
@@ -103,8 +90,7 @@ function Departamento({userData}){
       .then(response => {
         console.log('Resposta do servidor:', response.data);
         setDeletePopup(false);
-        handleClearUsers()
-        handleCreateUsers(event)
+        handleGetUsers(event)
       })
       .catch(error => {
         console.error('Erro ao enviar dados:', error);
@@ -133,7 +119,7 @@ function Departamento({userData}){
     return (
         <div className="mform">
           <div className = "text">Funcionários</div>
-          <button className= "update-btn" onClick={handleGetUsers}>Recarregar</button>
+          <button className= "update-btn" onClick={handleGetUsers}>Recarregar...</button>
           <button className= "update-btn" onClick={handleCreateUsers}>Criar</button>
           <button className= "delete-btn" onClick={handleDelete}>Deletar</button>
 
@@ -173,7 +159,7 @@ function Departamento({userData}){
               return (
                 <div class="table-row">
                   <div class="table-data">{obj.cpf}</div>
-                  <div class="table-data">{obj.name}</div>
+                  <div class="table-data">{obj.nome}</div>
                   <div class="table-data">{obj.funcao}</div>
                   <div class="table-data">{obj.salario}</div>
                   <div class="table-data">{obj.dataInicio}</div>
@@ -188,6 +174,7 @@ function Departamento({userData}){
           <div className='container-modal'>
             <div className="text-modal">Criar Funcionario</div>
             <form onSubmit={handleSubmitModal}>
+            <div class="form-row">
               <div class="input-modal">
                 <label className='modalLabel' for="cdprod">
                   Nome
@@ -209,7 +196,8 @@ function Departamento({userData}){
                       value={formData.cpf}
                       onChange={handleInputChange} required />
               </div>
-
+              </div>
+              <div class="form-row">
               <div class = "input-modal">
                 <label className='modalLabel' for="quantidade">
                   Função
@@ -231,7 +219,9 @@ function Departamento({userData}){
                       value={formData.senha}
                       onChange={handleInputChange} required />
               </div>
+              </div>
 
+              <div class="form-row">
               <div class = "input-modal">
                 <label className='modalLabel' for="quantidade">
                   Salario
@@ -253,7 +243,7 @@ function Departamento({userData}){
                       value={formData.intervalo}
                       onChange={handleInputChange} required />
               </div>
-
+              </div>
               <div class = "input-modal">
                 <label className='modalLabel' for="quantidade">
                   Setor (Repositor)
@@ -274,7 +264,7 @@ function Departamento({userData}){
 
         <Popup trigger={buttonDeletePopup} setTrigger={setDeletePopup}>
           <div className='container-modal'>
-            <div className="text-modal">Deleta Encomenda</div>
+            <div className="text-modal">Deleta Funcionario</div>
             <form onSubmit={handleSubmitDelete}>
             <div class = "input-modal">
                 <label className='modalLabel' for="quantidade">

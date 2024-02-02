@@ -19,9 +19,9 @@ def conecta_db():
   #                       user='postgres', 
   #                       password='Valamiel@20')
   con = psycopg2.connect(host='localhost', 
-                         database='supermercadoBD',
+                         database='superManeger',
                          user='postgres', 
-                         password='Valamiel@20')
+                         password='147258')
   return con
 
 # Função para consultas no banco
@@ -239,32 +239,35 @@ def get_funcionario():
     df_bd2 = pd.DataFrame(repositor, columns=['cpfrep', 'repnome', 'salariorep', 'datainirep'])
     df_bd1.head()
     df_bd2.head()
-    dict_funcionarios = dict()
-    for operador in df_bd1:
-        cpf: operador['cpfop']
-        nome: operador['nomeop']
-        funcao : operador['Operador']
-        salario: operador['salarioop']
-        dataInicio: operador['datainicio']
-        horaIntervalo: operador['horaintervalo']
-
-    for repositor in df_bd2:
-        cpf: repositor['cpfrep']
-        nome: repositor['nomerep']
-        funcao : repositor['Repositor']
-        salario: repositor['salariorep']
-        dataInicio: repositor['datainicio']
-        horaIntervalo: repositor['horaintervalo']
-
-
-    df_bd1['funcao'] = 'Operador'
-    df_bd2['funcao'] = 'Repositor'
-    df_bd2['horainter'] = '12:15'
     df_bd1 = df_bd1.to_dict()
     df_bd2 = df_bd2.to_dict()
-    df_bd1.update(df_bd2)
-    print("Dados banco:", df_bd1)
-    return df_bd1
+    print("Dados banco op:", df_bd1)
+    print("Dados banco rep:", df_bd2)
+
+    dict_funcionarios = []
+    
+    for i in range(len(df_bd1['cpfop'])):
+    #for operador in df_bd1:
+        dict_funcionarios.append({'cpf': df_bd1['cpfop'][i],
+            'nome': df_bd1['opnome'][i],
+            'salario': df_bd1['salarioop'][i],
+            'dataInicio': str(df_bd1['datainiop'][i]),
+            'horaIntervalo': str(df_bd1['horainter'][i]),
+            'funcao': 'Operador'})
+        
+
+    for i in range(len(df_bd2['cpfrep'])):
+    #for repositor in df_bd2:
+        dict_funcionarios.append({'cpf': df_bd2['cpfrep'][i],
+          'nome': df_bd2['repnome'][i],
+          'salario': df_bd2['salariorep'][i],
+          'dataInicio': str(df_bd2['datainirep'][i]),
+          'horaIntervalo': '12:15',
+          'funcao': 'Repositor'})
+
+
+    print("Dados retorno:", dict_funcionarios)
+    return json.dumps(dict_funcionarios)
 
 @app.route('/api/criaFuncionario', methods=['POST'])
 def create_funcionario():
@@ -300,11 +303,12 @@ def delete_funcionario():
     print("Dados recebidos:", funcionario)
     if(funcionario['funcao'] == 'Operador'):
         cpfop = funcionario['cpf']
-        funcionario = inserir_db('DELETE FROM OPERADOR WHERE cpfop = ' + cpfop)
-
-    if(funcionario['funcao'] == 'Repositor'):
+        funcionario = inserir_db('DELETE FROM OPERA WHERE idope = \'' + cpfop + '\'')
+        funcionario = inserir_db('DELETE FROM OPERADOR WHERE cpfop = \'' + cpfop + '\'')
+        
+    elif(funcionario['funcao'] == 'Repositor'):
         cpfrep = funcionario['cpf']
-        funcionario = inserir_db('DELETE FROM REPOSITOR WHERE cpfrep = ' + cpfrep)
+        funcionario = inserir_db('DELETE FROM REPOSITOR WHERE cpfrep = \'' + cpfrep +'\'')
     funcionario = {'error': False}
     return funcionario
 
