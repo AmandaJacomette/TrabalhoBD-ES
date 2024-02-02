@@ -14,6 +14,8 @@ function Formulario({navigation}){
     //const history = useNavigate();
     const navigate = useNavigate()
     const { setToken, token } = useContext(StoreContext);
+    const { setCpf, cpf } = useContext(StoreContext);
+    const { setNome, nome } = useContext(StoreContext);
 
     
     const [formData, setFormData] = useState({
@@ -36,9 +38,19 @@ function Formulario({navigation}){
         
         if(response.data.error != true){
           if(response.data.option == 1){
-            navigate("EntrarCaixa",  { replace: false });
+            setToken({token: 1});
+            setCpf({cpf: response.data.cpfop});
+            setNome({nome: response.data.opnome});
+            navigate("Home",  { replace: false });
           } else if(response.data.option == 2){
             setToken({token: 2});
+            setCpf({cpf: response.data.cpfge});
+            setNome({nome: response.data.gernome});
+            navigate("Home",  { replace: false });
+          } else if(response.data.option == 3){
+            setToken({token: 3});
+            setCpf({cpf: response.data.cpfrep});
+            setNome({nome: response.data.repnome});
             navigate("Home",  { replace: false });
           }
           
@@ -55,16 +67,7 @@ function Formulario({navigation}){
           setToken({token: 1});
           navigate("Home",  { replace: false });
         }
-
         event.preventDefault();
-        
-        /*axios.post('http://127.0.0.1:5000/api/sendDados', formData)
-          .then(response => {
-            console.log('Resposta do servidor:', response.data);
-          })
-          .catch(error => {
-            console.error('Erro ao enviar dados:', error);
-          });*/
       };
     
 

@@ -57,32 +57,35 @@ def send_data():
     print("Dados recebidos:", data)
     login = data['login']
     senha = data['senha']
-    reg = consultar_db('select cpfop from public.operador where cpfop = \'' + login +'\' and senhaop = '+ str(senha))
-    ger = consultar_db('select cpfge from public.gerente where cpfge = \'' + login +'\' and senhager = '+ str(senha))
-    rep = consultar_db('select cpfrep from public.repositor where cpfrep = \'' + login +'\' and senharep = '+ str(senha))
+    reg = consultar_db('select cpfop, opnome from public.operador where cpfop = \'' + login +'\' and senhaop = '+ str(senha))
+    ger = consultar_db('select cpfge, gernome from public.gerente where cpfge = \'' + login +'\' and senhager = '+ str(senha))
+    rep = consultar_db('select cpfrep, repnome from public.repositor where cpfrep = \'' + login +'\' and senharep = '+ str(senha))
     print("Dados banco:", reg)
     if(len(reg) > 0):
-        df_bd = pd.DataFrame(reg, columns=['cpfop'])
+        df_bd = pd.DataFrame(reg, columns=['cpfop', 'opnome'])
         df_bd.head()
         df_bd = df_bd.to_dict()
         data = {'error': False,
                 'option': 1,
-                'cpfop': df_bd['cpfop'][0]}
+                'cpfop': df_bd['cpfop'][0],
+                'opnome': df_bd['opnome'][0]}
         result = 0
     elif(len(ger) > 0):
-        df_bd = pd.DataFrame(ger, columns=['cpfge'])
+        df_bd = pd.DataFrame(ger, columns=['cpfge', 'gernome'])
         df_bd.head()
         df_bd = df_bd.to_dict()
         data = {'error': False,
                 'option': 2,
-                'cpfge': df_bd['cpfge'][0]}
+                'cpfge': df_bd['cpfge'][0],
+                'gernome': df_bd['gernome'][0]}
     elif(len(rep) > 0):
-        df_bd = pd.DataFrame(rep, columns=['cpfrep'])
+        df_bd = pd.DataFrame(rep, columns=['cpfrep', 'repnome'])
         df_bd.head()
         df_bd = df_bd.to_dict()
         data = {'error': False,
                 'option': 3,
-                'cpfrep': df_bd['cpfrep'][0]}
+                'cpfrep': df_bd['cpfrep'][0],
+                'repnome': df_bd['repnome'][0]}
     else:
        df_bd = {}
        data = {'error': True,
@@ -116,10 +119,26 @@ def update_encomenda():
     id = data['id']
     status = data['status']
     encomenda = inserir_db('UPDATE ENCOMENDA SET STATUS = \'' + status +'\' WHERE IDENCOMENDA = ' + id)
-    #df_bd = pd.DataFrame(encomenda, columns=['idencomenda', 'repnome', 'prodnome', 'datapedido', 'quantidade', 'valor', 'status'])
-    #df_bd.head()
-   #df_bd = df_bd.to_dict()
-    #print("Dados banco:", df_bd)
+    data = {'error': False}
+    return data
+
+@app.route('/api/atualizaEstoque', methods=['POST'])
+def update_estoque():
+    data = request.json  # Os dados do formulário serão enviados como JSON
+    print("Dados recebidos:", data)
+    id = data['id']
+    quantidade = data['quantidade']
+    encomenda = inserir_db('UPDATE ESTOQUE SET QUANTATUALPROD = \'' + quantidade +'\' WHERE IDESTOQUE = ' + id)
+    data = {'error': False}
+    return data
+
+@app.route('/api/atualizaPrateleira', methods=['POST'])
+def update_prateleira():
+    data = request.json  # Os dados do formulário serão enviados como JSON
+    print("Dados recebidos:", data)
+    id = data['id']
+    quantidade = data['quantidade']
+    encomenda = inserir_db('UPDATE PRATELEIRA SET QUANTATUALPROD = \'' + quantidade +'\' WHERE IDPRAT = ' + id)
     data = {'error': False}
     return data
 
@@ -146,10 +165,21 @@ def get_encomenda():
 
 @app.route('/api/getEstoque', methods=['GET'])
 def get_estoque():
-    estoque = consultar_db('SELECT P.PRODNOME, E.QUANTATUALPROD, E.SECAO ' +
+    estoque = consultar_db('SELECT E.IDESTOQUE, P.PRODNOME, E.QUANTATUALPROD, E.SECAO ' +
                              'FROM ESTOQUE E, PRODUTO P '+
                              'WHERE E.CDPROD = P.CODBARRAS')
-    df_bd = pd.DataFrame(estoque, columns=['prodnome', 'quantatualprod', 'secao'])
+    df_bd = pd.DataFrame(estoque, columns=['idestoque', 'prodnome', 'quantatualprod', 'secao'])
+    df_bd.head()
+    df_bd = df_bd.to_dict()
+    print("Dados banco:", df_bd)
+    return df_bd
+
+@app.route('/api/getPrateleira', methods=['GET'])
+def get_prateleira():
+    estoque = consultar_db('SELECT T.IDPRAT, T.SECAO, P.PRODNOME, T.QUANTATUALPROD '+
+                            'FROM PRATELEIRA T, PRODUTO P '+
+                            'WHERE T.CDPROD = P.CODBARRAS')
+    df_bd = pd.DataFrame(estoque, columns=['idprat', 'secao', 'prodnome', 'quantatualprod'])
     df_bd.head()
     df_bd = df_bd.to_dict()
     print("Dados banco:", df_bd)
@@ -167,6 +197,17 @@ def create_chamado():
     inserir_db('INSERT INTO RECURSOSHUMANOS(cpffuncionario, nomefuncionario,'+
                ' departamento, titulo, assunto) '+
                 ' VALUES ( \''+ cpffuncionario +'\', \'' + nome + '\', '+ departamento +', \'' + titulo + '\', \'' + assunto + '\')')
+    
+    return chamado
+
+@app.route('/api/entraCaixa', methods=['POST'])
+def entra_caixa():
+    chamado = request.json  # Os dados do formulário serão enviados como JSON
+    print("Dados recebidos:", chamado)
+    idope = chamado['idope']
+    idcaixa = chamado['idcaixa']
+    inserir_db('INSERT INTO OPERA'+
+                ' VALUES ( \''+ str(idope) +'\', \'' + str(idcaixa) + '\', \''+ str(datahj) +'\', \''+ str(datahj) +'\')')
     
     return chamado
 

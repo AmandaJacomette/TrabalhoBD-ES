@@ -115,12 +115,29 @@ function Departamento({userData}){
       
   }
 
+  const handleGetUsers = (event) => {
+      
+    event.preventDefault();
+    
+    
+    axios.get('http://127.0.0.1:5000/api/getEncomendas')
+      .then(response => {
+        console.log('Resposta do servidor:', response.data);          
+        //const table = createTableEnc(response.data)
+        //setTableData([...table])
+      })
+      .catch(error => {
+        console.error('Erro ao enviar dados:', error);
+      });
+      
+  }
+
     return (
         <div className="mform">
-        <div className = "text">Funcionários</div>
-        
-      <button className= "update-btn" onClick={handleCreateUsers}>Criar</button>
-      <button className= "delete-btn" onClick={handleDelete}>Deletar</button>
+          <div className = "text">Funcionários</div>
+          <button className= "update-btn" onClick={handleGetUsers}>Recarregar</button>
+          <button className= "update-btn" onClick={handleCreateUsers}>Criar</button>
+          <button className= "delete-btn" onClick={handleDelete}>Deletar</button>
 
       <div class="table">
       <div class="table-header">

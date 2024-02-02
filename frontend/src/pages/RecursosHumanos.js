@@ -111,7 +111,7 @@ const handleCreateChamados = (event) => {
     .then(response => {
       console.log('Resposta do servidor:', response.data);
       const table = createChamados(response.data)
-      setTableData([...tableData, ...table])
+      setTableData([...table])
     })
     .catch(error => {
       console.error('Erro ao enviar dados:', error);

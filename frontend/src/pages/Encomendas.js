@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {withRouter} from 'react-router-dom';
 import axios from 'axios';
-// import $ from 'jquery';
-
 import '../components/style/style.css'
 import StoreContext from '../components/Store/Context';
-import logo from "../img/logo.png"
 import Popup from '../components/Popup';
 
 function createTableEnc(data) {
@@ -66,23 +62,15 @@ function Encomendas({userData}){
         }
       };
 
-    const sendEncomendas = (data) => {
-        setEncomendas(data);
-    }
-
-    const handleClearEnc = () => {
-        setTableData([]);
-      }
-
     const handleCreateEnc = (event) => {
-
-      event.preventDefault();
       
+      event.preventDefault();
+    
       axios.get('http://127.0.0.1:5000/api/getEncomendas')
         .then(response => {
-          console.log('Resposta do servidor:', response.data);
+          console.log('Resposta do servidor:', response.data);          
           const table = createTableEnc(response.data)
-          setTableData([...tableData, ...table])
+          setTableData([...table])
         })
         .catch(error => {
           console.error('Erro ao enviar dados:', error);
@@ -116,7 +104,7 @@ function Encomendas({userData}){
 
     const handleDelete = () => {
       setDeletePopup(true);
-  }
+    }
   
     const handleSubmitModal = (event) => {
       event.preventDefault();
@@ -127,7 +115,6 @@ function Encomendas({userData}){
         .then(response => {
           console.log('Resposta do servidor:', response.data);
           setButtonPopup(false);
-          handleClearEnc()
           handleCreateEnc(event)
         })
         .catch(error => {
@@ -144,7 +131,6 @@ function Encomendas({userData}){
         .then(response => {
           console.log('Resposta do servidor:', response.data);
           setDeletePopup(false);
-          handleClearEnc()
           handleCreateEnc(event)
         })
         .catch(error => {
@@ -160,7 +146,7 @@ function Encomendas({userData}){
         <div class = "text">Encomendas</div>
         <form onSubmit={handleSubmit}>
            
-          { token == 2 ? 
+          { token.token == 3 ? 
           <div className='form-all'>
               <div class = "text">
                 Criar Encomenda
@@ -174,7 +160,7 @@ function Encomendas({userData}){
                         onChange={handleInputChange} required/>
                         <div class="underline"></div>
                     <label for="solicitante">
-                    Nome Solicitante
+                    CPF Solicitante
                     </label>
               </div>
               
