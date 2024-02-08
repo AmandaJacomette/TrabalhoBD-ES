@@ -27,12 +27,14 @@ function Encomendas({userData}){
     //const history = useNavigate();
     const navigate = useNavigate();
     const { setToken, token } = useContext(StoreContext);
+    const { setCpf, cpf } = useContext(StoreContext);
     const [tableData, setTableData] = useState([]);
     const [buttonPopup, setButtonPopup] = useState(false);
     const [buttonDeletePopup, setDeletePopup] = useState(false);
 
     const[formData, setEncomendas] = useState({
             id: 0,
+            solicitante: cpf.cpf,
             repnome: 'Funcionário 1',
             prodnome: 'Funcionário 1',
             datapedido: '24-01-2024',
@@ -208,7 +210,7 @@ function Encomendas({userData}){
         <div class = "text">Encomendas Feitas</div>
         <button className= "update-btn" onClick={handleCreateEnc}>Recarregar...</button>
         <button className= "delete-btn" onClick={handleDelete}>Deletar</button>
-        <button className= "update-btn" onClick={handleChangeStatus}>Atualizar</button>
+        { token.token == 2 ?<button className= "update-btn" onClick={handleChangeStatus}>Atualizar</button>: ''}
           <div className="mtable">
      
       <div class="table">

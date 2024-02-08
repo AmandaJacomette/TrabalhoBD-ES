@@ -31,7 +31,8 @@ function Departamento({userData}){
     funcao: '',
     senha: '',
     salario: 0,
-    intervalo: ''
+    intervalo: '',
+    setor: ''
   });
 
   const handleInputChange = (event) => {
@@ -251,7 +252,7 @@ function Departamento({userData}){
                 <input 
                       name="setor" 
                       className='dadosUsers' 
-                      value={formData.intervalo}
+                      value={formData.setor}
                       onChange={handleInputChange} required />
               </div>
 

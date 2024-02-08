@@ -108,7 +108,7 @@ def create_encomenda():
     df_bd = df_bd.to_dict()
     print("Dados banco:", df_bd['valor'][0])
     valor = float(df_bd['valor'][0]) * float(quantidade)
-    inserir_db('INSERT INTO ENCOMENDA (cdprod, datapedido, quantidade, valor, status, solicitante) VALUES ( \''+ cdprod +'\', \'' + str(datahj) + '\', '+ quantidade + ', ' + str(valor) + ', \'Aguardando autorização\', \'' + solicitante + '\')')
+    inserir_db('INSERT INTO ENCOMENDA (cdprod, datapedido, quantidade, valor, status, solicitante) VALUES ( \''+ cdprod +'\', \'' + str(datahj) + '\', '+ quantidade + ', ' + str(round(valor, 2)) + ', \'Aguardando autorização\', \'' + solicitante + '\')')
     
     return data
 
@@ -292,7 +292,7 @@ def create_funcionario():
         setor = funcionario['setor']
         ##datainirep = funcionario['datainirep']
         ##horainter =funcionario['horainter']
-        inserir_db('INSERT INTO OPERADOR( senharep, repnome, cpfrep, datainirep, salariorep, setor) '+
+        inserir_db('INSERT INTO REPOSITOR( senharep, repnome, cpfrep, datainirep, salariorep, setor) '+
                 ' VALUES ( ' + senha + ', \'' + nome + '\', \''+ cpf +'\', \'' + str(datahj) + '\', ' + salario + ', \'' + setor+ '\')')
 
     return funcionario

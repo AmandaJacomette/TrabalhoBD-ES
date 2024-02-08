@@ -77,9 +77,11 @@ function RecursosHumanos({userData}){
     axios.post('http://127.0.0.1:5000/api/criaChamado', formData)
       .then(response => {
         console.log('Resposta do servidor:', response.data);
+        window.alert("Chamado criado com sucesso");
       })
       .catch(error => {
         console.error('Erro ao enviar dados:', error);
+        window.alert("Erro ao criar chamado");
       });
   };
 
